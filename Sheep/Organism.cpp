@@ -9,3 +9,13 @@ char Organism::Draw()
 {
 	return type;
 }
+
+int Organism::GetX()
+{
+	return x;
+}
+
+int Organism::GetY()
+{
+	return y;
+}

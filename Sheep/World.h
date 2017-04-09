@@ -7,11 +7,11 @@ class World
 {
 private:
 	size_t w, h;
-	std::list<Organism> organisms;
+	Organism ***organisms;
 public:
 	World(size_t w, size_t h);
 	void DoTurn();
-	void PushOrganism(Organism &o);
+	bool AddOrganism(Organism &o);
 	~World();
 	friend std::ostream& operator<<(std::ostream& stream, World& world);
 };

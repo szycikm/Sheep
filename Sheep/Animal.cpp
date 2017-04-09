@@ -9,3 +9,8 @@ void Animal::Action()
 {
 	// TODO action, Action, ACTION
 }
+
+int Animal::GetInitiative()
+{
+	return initiative;
+}

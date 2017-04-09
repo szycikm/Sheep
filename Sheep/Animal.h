@@ -9,4 +9,5 @@ public:
 	using Organism::Organism;
 	void Collision(Organism &other);
 	void Action() override;
+	int GetInitiative();
 };
