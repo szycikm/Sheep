@@ -2,10 +2,15 @@
 
 void Animal::Collision(Organism & other)
 {
-	// TODO default animal collision logic
+	// TODO insert clever collision logic here
 }
 
 void Animal::Action()
 {
-	// default animal move
+	// TODO action, Action, ACTION
+}
+
+int Animal::GetInitiative()
+{
+	return initiative;
 }
