@@ -148,12 +148,14 @@
   <ItemGroup>
     <ClInclude Include="Animal.h" />
     <ClInclude Include="Organism.h" />
+    <ClInclude Include="Plant.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="World.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animal.cpp" />
     <ClCompile Include="Organism.cpp" />
+    <ClCompile Include="Plant.cpp" />
     <ClCompile Include="Sheep.cpp" />
     <ClCompile Include="World.cpp" />
   </ItemGroup>
