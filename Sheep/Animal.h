@@ -3,11 +3,8 @@
 
 class Animal : public Organism
 {
-private:
-	int initiative;
 public:
 	using Organism::Organism;
-	void Collision(Organism &other);
+	void Collision(Organism& other) override;
 	void Action() override;
-	int GetInitiative();
 };
