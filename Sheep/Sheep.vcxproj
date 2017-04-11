@@ -148,6 +148,7 @@
   <ItemGroup>
     <ClInclude Include="Animal.h" />
     <ClInclude Include="Console.h" />
+    <ClInclude Include="Coordinates.h" />
     <ClInclude Include="Organism.h" />
     <ClInclude Include="Plant.h" />
     <ClInclude Include="Sheep.h" />

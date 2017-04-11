@@ -1,10 +1,6 @@
 #pragma once
-#include <iostream>
 #include <vector>
-#include <algorithm>
-#include "Console.h"
-#include "Animal.h"
-#include "Plant.h"
+#include "Coordinates.h"
 
 #define GRID_LEFT_MARGIN 70
 
@@ -14,9 +10,14 @@ class World
 {
 private:
 	std::vector<Organism*> organisms;
+	coordinates_t maxxy;
 public:
+	World(size_t maxx, size_t maxy);
+	coordinates_t GetMaxXY();
+	Organism* isFieldOccupied(coordinates_t questioner);
 	void DoTurn();
-	void AddOrganism(Organism &o);
+	void AddOrganism(Organism *o);
+	void RemoveOrganism(Organism *o);
 	void PrintWorld();
 	~World();
 };

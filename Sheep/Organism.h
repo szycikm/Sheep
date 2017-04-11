@@ -1,22 +1,21 @@
 #pragma once
+#include "Coordinates.h"
 
 class World;
 class Organism
 {
-private:
-	size_t x, y;
-	World& fromWorld;
 protected:
+	coordinates_t coordinates;
 	int age;
 	char type;
 	int strength, initiative;
+	virtual void Collision(Organism* other) = 0;
 public:
+	World& fromWorld;
 	Organism(World& fromWorld, size_t x, size_t y);
 	virtual void Action() = 0;
-	virtual void Collision(Organism & other) = 0;
-	char Draw();
-	size_t GetX() const;
-	size_t GetY() const;
+	char GetType() const;
+	coordinates_t GetXY() const;
 	int GetAge() const;
 	int GetStrength() const;
 	int GetInitiative() const;

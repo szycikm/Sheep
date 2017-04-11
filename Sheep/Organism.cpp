@@ -1,23 +1,20 @@
+#include <tuple>
 #include "Organism.h"
 
-Organism::Organism(World& fromWorld, size_t x, size_t y): fromWorld(fromWorld), x(x), y(y)
+Organism::Organism(World& fromWorld, size_t x, size_t y): fromWorld(fromWorld), age(0)
 {
-	age = 0;
+	coordinates.x = x;
+	coordinates.y = y;
 }
 
-char Organism::Draw()
+char Organism::GetType() const
 {
 	return type;
 }
 
-size_t Organism::GetX() const
+coordinates_t Organism::GetXY() const
 {
-	return x;
-}
-
-size_t Organism::GetY() const
-{
-	return y;
+	return coordinates;
 }
 
 int Organism::GetAge() const

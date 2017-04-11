@@ -1,6 +1,7 @@
+#include <windows.h>
 #include "Console.h"
 
-void Console::GoToXY(int x, int y)
+void Console::GoToXY(size_t x, size_t y)
 {
 	COORD coord;
 	coord.X = x;

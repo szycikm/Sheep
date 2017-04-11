@@ -1,8 +1,7 @@
 #pragma once
-#include <windows.h>
 
 class Console
 {
 public:
-	static void GoToXY(int x, int y);
+	static void GoToXY(size_t x, size_t y);
 };

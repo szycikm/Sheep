@@ -1,3 +1,6 @@
+#include <iostream>
+#include <random>
+#include <time.h>
 #include "World.h"
 #include "Organism.h"
 #include "WinstonTheWolf.h"
@@ -5,18 +8,21 @@
 
 int main()
 {
-	World world;
+	srand(time(NULL));
+	World world(5,5);
 	int turns = 0;
 	Organism *organisms[] = {
 		&WinstonTheWolf(world, 1, 4),
 		&Sheep(world, 2, 0),
+		&Sheep(world, 4, 3),
+		&WinstonTheWolf(world, 1, 2),
 		&Sheep(world, 0, 3),
 		&WinstonTheWolf(world, 4, 2)
 	};
 
-	for (size_t i = 0; i < 4; i++)
+	for (size_t i = 0; i < 6; i++)
 	{
-		world.AddOrganism(*organisms[i]);
+		world.AddOrganism(organisms[i]);
 	}
 	
 	char c = '\n';
