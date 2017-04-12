@@ -1,14 +1,17 @@
 #include <iostream>
 #include <random>
+#include <string>
 #include <time.h>
 #include "World.h"
 #include "Organism.h"
 #include "WinstonTheWolf.h"
 #include "Sheep.h"
+#include "Log.h"
 
 int main()
 {
 	srand(time(NULL));
+	Log::Initialize("sheep.log");
 	World world(5,5);
 	int turns = 0;
 	Organism *organisms[] = {
@@ -26,15 +29,27 @@ int main()
 	}
 	
 	char c = '\n';
+	int t = 1;
 	while (c != 'q')
 	{
-		system("CLS");
-		std::cout << "Programowanie Obiektowe projekt 1: Owca. Autor: Marcin Szycik 165116" << std::endl;
-		std::cout << "Tura " << turns << ". enter = nastepna tura; q = zakoncz symulacje" << std::endl;
-		world.DoTurn();
-		turns++;
-		world.PrintWorld();
+		if (c == 'n')
+			scanf_s("%i", &t);
+		
+		for (size_t i = 0; i < t; i++)
+		{
+			system("CLS");
+			std::cout << "Programowanie Obiektowe projekt 1: Owca" << std::endl;
+			std::cout << "Autor: Marcin Szycik 165116" << std::endl;
+			std::cout << "enter = nastepna tura" << std::endl << "q = zakoncz symulacje" << std::endl << "n = podaj ilosc tur" << std::endl;
+			Log::Append("Tura " + std::to_string(turns));
+			std::cout << "Tura " << turns << std::endl;
+			world.DoTurn();
+			turns++;
+			world.PrintWorld();
+		}
+		t = 1;
 		c = getchar();
 	}
+	Log::Close();
 	return 0;
 }

@@ -2,7 +2,7 @@
 #include <vector>
 #include "Coordinates.h"
 
-#define GRID_LEFT_MARGIN 70
+#define GRID_LEFT_MARGIN 50
 
 class Organism;
 
