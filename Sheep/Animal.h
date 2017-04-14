@@ -4,8 +4,10 @@
 class Animal : public Organism
 {
 private:
-	void Collision(Organism* other) override;
+	virtual bool Collision(Organism* other);
+protected:
+	coordinates_t RandomizeNextField(coordinates_t oldCoordinates);
 public:
 	using Organism::Organism;
-	void Action() override;
+	virtual void Action() override;
 };

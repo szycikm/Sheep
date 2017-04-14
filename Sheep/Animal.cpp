@@ -2,74 +2,94 @@
 #include <random>
 #include <string>
 #include "Animal.h"
-#include "Io.h"
+#include "Output.h"
 #include "World.h"
 
-// default animal collision logic
-void Animal::Collision(Organism* other)
+// default animal collision logic. Returns if animal should be moved or not
+bool Animal::Collision(Organism* other)
 {
-	if (type == other->GetType())
+	if (other == nullptr)
 	{
-		// TODO have sex
+		// nothing stands on this field -> just move there
+		return true;
+	}
+	else if (type == other->GetType())
+	{
+		// animal of the same type stands on this field -> just have sex and don't move there
+		auto newCoordinates = coordinates;
+		newCoordinates.x++;
+		/*if (fromWorld.isFieldOccupied(newCoordinates)
+		{
+			auto newCoordinates = RandomizeNextField(coordinates);
+		}*/
+		return false;
 	}
 	else
 	{
-		// stronger or attacker wins. Looser organism is still in memory, but no longer in world
+		// stronger (or attacker) wins and takes looser's field
 		if (strength >= other->GetStrength())
 		{
-			std::cout << type << " zjadl " << other->GetType() << std::endl;
-			Io::AppendLog(std::string(1, type) + " zjadl " + std::string(1, other->GetType()));
+			std::cout << this->GetType() << " ate " << other->GetType() << std::endl;
+			Output::AppendLog(std::string(1, this->GetType()) + " ate " + std::string(1, other->GetType()));
 			other->fromWorld.RemoveOrganism(other);
 		}
 		else
 		{
-			std::cout << other->GetType() << " zjadl " << type << std::endl;
-			Io::AppendLog(std::string(1, other->GetType()) + " zjadl " + std::string(1, type));
+			std::cout << other->GetType() << " ate " << this->GetType() << std::endl;
+			Output::AppendLog(std::string(1, other->GetType()) + " ate " + std::string(1, this->GetType()));
 			fromWorld.RemoveOrganism(this);
 		}
+		return true;
 	}
 }
 
-// default animal movement
-void Animal::Action()
+// randomizes new coordinates respecting the world limits
+coordinates_t Animal::RandomizeNextField(coordinates_t oldCoordinates)
 {
-	bool cont = true;
+	auto nextCoordinates = coordinates;
+	auto cont = true;
 	while (cont)
 	{
 		switch (rand() % 4)
 		{
 		case 0:
-			if (coordinates.x < fromWorld.GetMaxXY().x)
+			if (nextCoordinates.x < fromWorld.GetMaxXY().x)
 			{
-				coordinates.x++;
+				nextCoordinates.x++;
 				cont = false;
 			}
 			break;
 		case 1:
-			if (coordinates.x > 0)
+			if (nextCoordinates.x > 0)
 			{
-				coordinates.x--;
+				nextCoordinates.x--;
 				cont = false;
 			}
 			break;
 		case 2:
-			if (coordinates.y < fromWorld.GetMaxXY().y)
+			if (nextCoordinates.y < fromWorld.GetMaxXY().y)
 			{
-				coordinates.y++;
+				nextCoordinates.y++;
 				cont = false;
 			}
 			break;
 		case 3:
-			if (coordinates.y > 0)
+			if (nextCoordinates.y > 0)
 			{
-				coordinates.y--;
+				nextCoordinates.y--;
 				cont = false;
 			}
 			break;
 		}
 	}
+	return nextCoordinates;
+}
 
-	Organism* collider = fromWorld.isFieldOccupied(coordinates);
-	if (collider != nullptr && collider != this)
-		Collision(collider);
+// default animal movement
+void Animal::Action()
+{
+	auto nextCoordinates = RandomizeNextField(coordinates);
+	auto collider = fromWorld.isFieldOccupied(nextCoordinates);
+	if (Collision(collider))
+		coordinates = nextCoordinates;
 }

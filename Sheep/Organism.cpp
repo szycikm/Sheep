@@ -1,4 +1,4 @@
-#include <tuple>
+#include <locale>
 #include "Organism.h"
 
 Organism::Organism(World& fromWorld, size_t x, size_t y): fromWorld(fromWorld), age(0)
@@ -10,6 +10,12 @@ Organism::Organism(World& fromWorld, size_t x, size_t y): fromWorld(fromWorld), 
 char Organism::GetType() const
 {
 	return type;
+}
+
+char Organism::Draw() const
+{
+	// if organism is below 5 turns draw him small. Just for fun.
+	return age <= 5 ? std::tolower(type, std::locale()) : type;
 }
 
 coordinates_t Organism::GetXY() const

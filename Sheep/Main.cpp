@@ -1,4 +1,5 @@
 #include <iostream>
+#include <conio.h>
 #include <random>
 #include <string>
 #include <time.h>
@@ -6,14 +7,14 @@
 #include "Organism.h"
 #include "WinstonTheWolf.h"
 #include "Sheep.h"
-#include "Io.h"
+#include "Output.h"
 
 int main()
 {
 	srand(time(NULL));
-	Io::InitializeLog("sheep.log");
+	Output::InitializeLog("sheep.log");
 	World world(5,5);
-	int turns = 0;
+	auto turns = 0;
 	Organism *organisms[] = {
 		&WinstonTheWolf(world, 1, 4),
 		&Sheep(world, 2, 0),
@@ -28,27 +29,37 @@ int main()
 		world.AddOrganism(organisms[i]);
 	}
 	
-	char c = '\n';
-	int t = 1;
+	char c = 'n';
+	size_t t = 1;
 	while (c != 'q')
 	{
-		if (c == 'n')
+		if (c == 't')
+		{
+			Output::GoToXY(0, CONSOLE_HEIGHT - 1);
+			std::cout << "Input turns count: ";
 			scanf_s("%i", &t);
+		}
 		
 		for (size_t i = 0; i < t; i++)
 		{
 			system("CLS");
+			Output::GoToXY(0, CONSOLE_HEIGHT - 8);
 			std::cout << "Programowanie Obiektowe projekt 1: Owca" << std::endl;
 			std::cout << "Autor: Marcin Szycik 165116" << std::endl;
-			std::cout << "enter = nastepna tura" << std::endl << "q = zakoncz symulacje" << std::endl << "n = podaj ilosc tur" << std::endl;
-			Io::AppendLog("Tura " + std::to_string(turns));
-			std::cout << "Tura " << turns << std::endl;
+			std::cout << "n = new turn" << std::endl << "q = quit" << std::endl << "t = input turns count" << std::endl;
+			std::cout << "Turn " << turns << std::endl;
+			std::cout << "Alive organisms: " << world.GetOrganismCount();
+
+			Output::AppendLog("Turn " + std::to_string(turns));
+			Output::AppendLog("Alive organisms: " + std::to_string(world.GetOrganismCount()));
+
+			Output::GoToXY(0, 0);
 			world.DoTurn();
 			turns++;
 			world.PrintWorld();
 		}
 		t = 1;
-		c = getchar();
+		c = _getch();
 	}
 	return 0;
 }

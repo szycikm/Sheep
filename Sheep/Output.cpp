@@ -1,10 +1,10 @@
 #include <string>
 #include <windows.h>
-#include "Io.h"
+#include "Output.h"
 
-std::ofstream Io::file;
+std::ofstream Output::file;
 
-void Io::GoToXY(size_t x, size_t y)
+void Output::GoToXY(size_t x, size_t y)
 {
 	COORD coord;
 	coord.X = x;
@@ -12,17 +12,17 @@ void Io::GoToXY(size_t x, size_t y)
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 }
 
-void Io::InitializeLog(std::string filename)
+void Output::InitializeLog(std::string filename)
 {
 	file.open(filename);
 }
 
-void Io::AppendLog(std::string line)
+void Output::AppendLog(std::string line)
 {
 	file << line << std::endl;
 }
 
-Io::~Io()
+Output::~Output()
 {
 	file.close();
 }

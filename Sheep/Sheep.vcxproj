@@ -148,7 +148,7 @@
   <ItemGroup>
     <ClInclude Include="Animal.h" />
     <ClInclude Include="Coordinates.h" />
-    <ClInclude Include="Io.h" />
+    <ClInclude Include="Output.h" />
     <ClInclude Include="Organism.h" />
     <ClInclude Include="Plant.h" />
     <ClInclude Include="Sheep.h" />
@@ -158,7 +158,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animal.cpp" />
-    <ClCompile Include="Io.cpp" />
+    <ClCompile Include="Output.cpp" />
     <ClCompile Include="Sheep.cpp" />
     <ClCompile Include="WinstonTheWolf.cpp" />
     <ClCompile Include="Organism.cpp" />

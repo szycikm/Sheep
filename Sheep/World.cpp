@@ -1,6 +1,6 @@
 #include <iostream>
 #include <algorithm>
-#include "Io.h"
+#include "Output.h"
 #include "Animal.h"
 #include "World.h"
 
@@ -41,9 +41,12 @@ void World::DoTurn()
 	std::sort(organisms.begin(), organisms.end(), SortList);
 	for each (Organism* org in organisms)
 	{
-		std::cout << "akcja " << org->GetType() << " | (" << org->GetXY().x << "," << org->GetXY().y << ") | sila=" << org->GetStrength() << " | wiek=" << org->GetAge() << " | inicjatywa=" << org->GetInitiative() << std::endl;
-		org->Action();
-		org->IncrementAge();
+		if (org != nullptr)
+		{
+			std::cout << "akcja " << org->GetType() << " | (" << org->GetXY().x << "," << org->GetXY().y << ") | sila=" << org->GetStrength() << " | wiek=" << org->GetAge() << " | inicjatywa=" << org->GetInitiative() << std::endl; // TODO remove this debug nfo
+			org->Action();
+			org->IncrementAge();
+		}
 	}
 }
 
@@ -62,18 +65,34 @@ void World::RemoveOrganism(Organism* o)
 		//organisms.erase(it);
 }
 
+size_t World::GetOrganismCount()
+{
+	return organisms.size();
+}
+
 void World::PrintWorld()
 {
-	for (size_t i = 0; i < organisms.size(); i++)
+	// remove organisms that were killed in previous turn (they are now nullptrs)
+	for (size_t i = 0; i < GetOrganismCount(); i++)
 	{
 		if (organisms[i] == nullptr)
+		{
 			organisms.erase(organisms.begin() + i);
+			i--; // because we just deleted i element
+		}
 	}
-	std::cout << "Zywe organizmy: " << organisms.size() << std::endl;
+
+	// draw vertical thing for style points
+	for (size_t i = 0; i < CONSOLE_HEIGHT; i++)
+	{
+		Output::GoToXY(GRID_LEFT_MARGIN - 1, i);
+		std::cout << "|";
+	}
+
 	for each (Organism* org in organisms)
 	{
-		Io::GoToXY(org->GetXY().x + GRID_LEFT_MARGIN, org->GetXY().y);
-		std::cout << org->GetType();
+		Output::GoToXY(org->GetXY().x + GRID_LEFT_MARGIN, org->GetXY().y);
+		std::cout << org->Draw();
 	}
 }
 

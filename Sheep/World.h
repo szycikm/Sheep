@@ -2,8 +2,6 @@
 #include <vector>
 #include "Coordinates.h"
 
-#define GRID_LEFT_MARGIN 50
-
 class Organism;
 
 class World
@@ -18,6 +16,7 @@ public:
 	void DoTurn();
 	void AddOrganism(Organism *o);
 	void RemoveOrganism(Organism *o);
+	size_t GetOrganismCount();
 	void PrintWorld();
 	~World();
 };
