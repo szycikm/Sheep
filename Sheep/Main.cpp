@@ -6,12 +6,12 @@
 #include "Organism.h"
 #include "WinstonTheWolf.h"
 #include "Sheep.h"
-#include "Log.h"
+#include "Io.h"
 
 int main()
 {
 	srand(time(NULL));
-	Log::Initialize("sheep.log");
+	Io::InitializeLog("sheep.log");
 	World world(5,5);
 	int turns = 0;
 	Organism *organisms[] = {
@@ -41,7 +41,7 @@ int main()
 			std::cout << "Programowanie Obiektowe projekt 1: Owca" << std::endl;
 			std::cout << "Autor: Marcin Szycik 165116" << std::endl;
 			std::cout << "enter = nastepna tura" << std::endl << "q = zakoncz symulacje" << std::endl << "n = podaj ilosc tur" << std::endl;
-			Log::Append("Tura " + std::to_string(turns));
+			Io::AppendLog("Tura " + std::to_string(turns));
 			std::cout << "Tura " << turns << std::endl;
 			world.DoTurn();
 			turns++;
@@ -50,6 +50,5 @@ int main()
 		t = 1;
 		c = getchar();
 	}
-	Log::Close();
 	return 0;
 }

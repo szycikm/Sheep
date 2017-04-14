@@ -1,6 +1,6 @@
 #include <iostream>
 #include <algorithm>
-#include "Console.h"
+#include "Io.h"
 #include "Animal.h"
 #include "World.h"
 
@@ -72,7 +72,7 @@ void World::PrintWorld()
 	std::cout << "Zywe organizmy: " << organisms.size() << std::endl;
 	for each (Organism* org in organisms)
 	{
-		Console::GoToXY(org->GetXY().x + GRID_LEFT_MARGIN, org->GetXY().y);
+		Io::GoToXY(org->GetXY().x + GRID_LEFT_MARGIN, org->GetXY().y);
 		std::cout << org->GetType();
 	}
 }

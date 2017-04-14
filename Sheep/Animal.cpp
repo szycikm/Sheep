@@ -2,7 +2,7 @@
 #include <random>
 #include <string>
 #include "Animal.h"
-#include "Log.h"
+#include "Io.h"
 #include "World.h"
 
 // default animal collision logic
@@ -18,13 +18,13 @@ void Animal::Collision(Organism* other)
 		if (strength >= other->GetStrength())
 		{
 			std::cout << type << " zjadl " << other->GetType() << std::endl;
-			Log::Append(std::string(1, type) + " zjadl " + std::string(1, other->GetType()));
+			Io::AppendLog(std::string(1, type) + " zjadl " + std::string(1, other->GetType()));
 			other->fromWorld.RemoveOrganism(other);
 		}
 		else
 		{
 			std::cout << other->GetType() << " zjadl " << type << std::endl;
-			Log::Append(std::string(1, other->GetType()) + " zjadl " + std::string(1, type));
+			Io::AppendLog(std::string(1, other->GetType()) + " zjadl " + std::string(1, type));
 			fromWorld.RemoveOrganism(this);
 		}
 	}
