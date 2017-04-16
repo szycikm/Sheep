@@ -148,6 +148,7 @@
   <ItemGroup>
     <ClInclude Include="Animal.h" />
     <ClInclude Include="Coordinates.h" />
+    <ClInclude Include="Fox.h" />
     <ClInclude Include="Names.h" />
     <ClInclude Include="Output.h" />
     <ClInclude Include="Organism.h" />
@@ -159,6 +160,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animal.cpp" />
+    <ClCompile Include="Fox.cpp" />
     <ClCompile Include="Names.cpp" />
     <ClCompile Include="Output.cpp" />
     <ClCompile Include="Sheep.cpp" />

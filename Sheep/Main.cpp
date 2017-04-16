@@ -10,6 +10,7 @@
 #include "Organism.h"
 #include "WinstonTheWolf.h"
 #include "Sheep.h"
+#include "Fox.h"
 #include "Output.h"
 #include "Names.h"
 
@@ -25,23 +26,24 @@ int main()
 	std::map<char, char*> speciesNames;
 	speciesNames['W'] = "Wolf";
 	speciesNames['S'] = "Sheep";
+	speciesNames['F'] = "Fox";
 	std::vector<char*> randomNames = {
-		"Jake", "Winston", "Harry", "Larry", "Lenny", "Johnny", "Spencer", "Fred", "Joey", "Steve",
-		"Mascara", "Mooriela", "Vicky", "Christa", "Vicky", "Daisy", "Elizabeth", "Dolores", "Esmeralda", "Matilda"
+		"Jake", "Winston", "Harry", "Larry", "Lenny", "Johnny", "Spencer", "Fred", "Joey", "Steve", "Bob",
+		"Mascara", "Mooriela", "Vicky", "Christina", "Vicky", "Daisy", "Elizabeth", "Dolores", "Esmeralda", "Matilda", "Jenny"
 	};
 	Names names(speciesNames, randomNames);
 
-	World world(10, 10);
+	World world(15, 10);
 	auto turns = 0;
 	std::vector<Organism*> organisms;
-	organisms.push_back(&WinstonTheWolf(world, coordinates_t{ 1, 4 }));
-	organisms.push_back(&Sheep(world, coordinates_t{ 2, 0 }));
-	organisms.push_back(&Sheep(world, coordinates_t{ 9, 0}));
-	organisms.push_back(&Sheep(world, coordinates_t{ 4, 7}));
-	organisms.push_back(&WinstonTheWolf(world, coordinates_t{ 5, 2 }));
-	organisms.push_back(&WinstonTheWolf(world, coordinates_t{ 4, 2}));
+	//organisms.push_back(&WinstonTheWolf(world, coordinates_t{ 1, 4 }));
+	organisms.push_back(&Sheep(world, coordinates_t{ 2, 9 }));
+	organisms.push_back(&Sheep(world, coordinates_t{ 9, 5}));
+	organisms.push_back(&Fox(world, coordinates_t{ 1, 1 }));
+	//organisms.push_back(&WinstonTheWolf(world, coordinates_t{ 5, 2 }));
+	//organisms.push_back(&Fox(world, coordinates_t{ 5, 8 }));
 	organisms.push_back(&Sheep(world, coordinates_t{ 0, 3}));
-	organisms.push_back(&WinstonTheWolf(world, coordinates_t{ 4, 6}));
+	organisms.push_back(&Fox(world, coordinates_t{ 6, 7}));
 
 	for each (Organism* org in organisms)
 	{

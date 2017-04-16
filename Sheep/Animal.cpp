@@ -1,5 +1,4 @@
 #include <iostream>
-#include <random>
 #include <string>
 #include "Animal.h"
 #include "Output.h"
@@ -20,26 +19,19 @@ bool Animal::Collision(Organism* other)
 
 		Animal* that = dynamic_cast<Animal*>(other);
 
-		// check all four directions
-		coordinates_t newPosition[] = {
-			coordinates_t { position.x + 1, position.y },
-			coordinates_t { position.x - 1, position.y },
-			coordinates_t { position.x, position.y + 1 },
-			coordinates_t { position.x, position.y - 1 },
-		};
-
-		for (size_t i = 0; i < 4; i++)
+		// check all four directions in random order
+		for each (coordinates_t coords in RandomizeFields())
 		{
-			Animal* child = dynamic_cast<Animal*>(Clone(fromWorld, newPosition[i]));
+			Animal* child = dynamic_cast<Animal*>(Clone(fromWorld, coords));
 			if (fromWorld.AddOrganism(child))
 			{
-				Output::log << "D'awww. " << Names::GetSpeciesName(this->GetType()) << " " << this->GetName() << " and " << Names::GetSpeciesName(that->GetType()) << " " << that->GetName() << " are having a baby!"  << "And it's name is " << child->GetName() << std::endl;
+				Output::log << "D'awww. " << Names::GetSpeciesName(this->GetType()) << " " << this->GetName() << " and " << Names::GetSpeciesName(that->GetType()) << " " << that->GetName() << " are having a baby! And it's name is " << child->GetName() << std::endl;
 				return false;
 			}
 		}
 
 		// no place for new animal
-		Output::log << Names::GetSpeciesName(this->GetType()) << " " << this->GetName() << " and " << Names::GetSpeciesName(that->GetType()) << " " << that->GetName() << " wanted to have a baby, but there was no place for it" << std::endl;
+		Output::log << Names::GetSpeciesName(this->GetType()) << " " << this->GetName() << " and " << Names::GetSpeciesName(that->GetType()) << " " << that->GetName() << " wanted to have a baby, but the world decided otherwise" << std::endl;
 		return false;
 	}
 	else
@@ -62,16 +54,22 @@ bool Animal::Collision(Organism* other)
 	}
 }
 
-// default animal movement
-void Animal::Action()
+// detect collisions and move to the next position if necessary
+void Animal::Move(coordinates_t nextPosition)
 {
-	auto nextPosition = RandomizeNextField(position);
 	auto collider = fromWorld.isFieldOccupied(nextPosition);
 	if (Collision(collider))
 	{
 		position = nextPosition;
-		Output::log << Names::GetSpeciesName(type) << " " << GetName() << " moved to (" << GetXY().x  << "," << GetXY().y << ")" << std::endl;
+		Output::log << Names::GetSpeciesName(type) << " " << GetName() << " moved to (" << GetXY().x << "," << GetXY().y << ")" << std::endl;
 	}
+}
+
+// default animal movement
+void Animal::Action()
+{
+	auto nextPosition = RandomizeFields()[0]; // just grab first random generated value
+	Move(nextPosition);
 }
 
 const char* Animal::GetName()

@@ -60,15 +60,14 @@ void World::DoTurn()
 
 bool World::AddOrganism(Organism *o)
 {
-	// TODO add collision support while adding new organisms
 	if (o->GetXY().x >= maxxy.x || o->GetXY().y >= maxxy.y || o->GetXY().x < 0 || o->GetXY().y < 0)
 	{
-		Output::log << "Organism coordinates outside of this world" << std::endl;
+		//Output::log << "Organism coordinates outside of this world" << std::endl;
 		return false;
 	}
 	else if (isFieldOccupied(o->GetXY()))
 	{
-		Output::log << "Field already occupied" << std::endl;
+		//Output::log << "Field already occupied" << std::endl;
 		return false;
 	}
 	else
