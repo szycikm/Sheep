@@ -6,7 +6,7 @@ Sheep::Sheep(World& fromWorld, coordinates_t position) : Animal(fromWorld, posit
 	type = 'S';
 	strength = 4;
 	initiative = 4;
-	name = Names::GetRandomName(type);
+	name = Names::GetRandomName();
 }
 
 Sheep* Sheep::Clone(World& fromWorld, coordinates_t position)

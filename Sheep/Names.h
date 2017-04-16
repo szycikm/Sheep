@@ -2,19 +2,14 @@
 #include <map>
 #include <vector>
 
-typedef struct
-{
-	const char* fullName;
-	std::vector<char*> names;
-} species_t;
-
 class Names
 {
 private:
-	static std::map<char, species_t> species;
+	static std::map<char, char*> speciesNames;
+	static std::vector<char*> names;
 public:
-	Names(std::map<char, species_t> species);
+	Names(std::map<char, char*> speciesNames, std::vector<char*> names);
 	static const char GetLowercaseSymbol(char type);
 	static const char* GetSpeciesName(char type);
-	static const char* GetRandomName(char type);
+	static const char* GetRandomName();
 };
