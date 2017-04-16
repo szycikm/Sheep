@@ -6,8 +6,10 @@ class Animal : public Organism
 private:
 	virtual bool Collision(Organism* other);
 protected:
-	coordinates_t RandomizeNextField(coordinates_t oldCoordinates);
+	const char* name;
 public:
 	using Organism::Organism;
 	virtual void Action() override;
+	const char* GetName();
+	void IncrementAge() override;
 };

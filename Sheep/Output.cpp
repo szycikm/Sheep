@@ -2,9 +2,14 @@
 #include <windows.h>
 #include "Output.h"
 
-std::ofstream Output::file;
+std::ofstream Output::log;
 
-void Output::GoToXY(size_t x, size_t y)
+Output::Output(std::string filename)
+{
+	log.open(filename);
+}
+
+void Output::GoToXY(short x, short y)
 {
 	COORD coord;
 	coord.X = x;
@@ -12,17 +17,7 @@ void Output::GoToXY(size_t x, size_t y)
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 }
 
-void Output::InitializeLog(std::string filename)
-{
-	file.open(filename);
-}
-
-void Output::AppendLog(std::string line)
-{
-	file << line << std::endl;
-}
-
 Output::~Output()
 {
-	file.close();
+	log.close();
 }

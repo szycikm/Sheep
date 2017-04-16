@@ -1,8 +1,15 @@
 #include "Sheep.h"
+#include "Names.h"
 
-Sheep::Sheep(World& fromWorld, size_t x, size_t y) : Animal(fromWorld, x, y)
+Sheep::Sheep(World& fromWorld, coordinates_t position) : Animal(fromWorld, position)
 {
-	type = 'O';
+	type = 'S';
 	strength = 4;
 	initiative = 4;
+	name = Names::GetRandomName(type);
+}
+
+Sheep* Sheep::Clone(World& fromWorld, coordinates_t position)
+{
+	return new Sheep(fromWorld, position);
 }

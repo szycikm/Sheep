@@ -2,31 +2,46 @@
 #include <conio.h>
 #include <random>
 #include <string>
+#include <map>
 #include <time.h>
 #include "World.h"
 #include "Organism.h"
 #include "WinstonTheWolf.h"
 #include "Sheep.h"
 #include "Output.h"
+#include "Names.h"
 
 int main()
 {
 	srand(time(NULL));
-	Output::InitializeLog("sheep.log");
-	World world(5,5);
-	auto turns = 0;
-	Organism *organisms[] = {
-		&WinstonTheWolf(world, 1, 4),
-		&Sheep(world, 2, 0),
-		&Sheep(world, 4, 3),
-		&WinstonTheWolf(world, 1, 2),
-		&Sheep(world, 0, 3),
-		&WinstonTheWolf(world, 4, 2)
-	};
+	Output output("sheep.log");
 
-	for (size_t i = 0; i < 6; i++)
+	std::map<char, species_t> species;
+	species['W'] = {
+		"Wolf",
+		{ "Jake", "Winston", "Harry", "Larry", "Lenny", "Mascara", "Mooriela", "Vicky", "Christa", "Vicky" }
+	};
+	species['S'] = species_t{
+		"Sheep",
+		{ "Johnny", "Spencer", "Fred", "Joey", "Steve", "Daisy", "Elizabeth", "Dolores", "Esmeralda", "Matilda" }
+	};
+	Names names(species);
+
+	World world(10, 10);
+	auto turns = 0;
+	std::vector<Organism*> organisms;
+	organisms.push_back(&WinstonTheWolf(world, coordinates_t{ 1, 4 }));
+	organisms.push_back(&Sheep(world, coordinates_t{ 2, 0 }));
+	organisms.push_back(&Sheep(world, coordinates_t{ 9, 0}));
+	organisms.push_back(&Sheep(world, coordinates_t{ 4, 7}));
+	organisms.push_back(&WinstonTheWolf(world, coordinates_t{ 5, 2 }));
+	organisms.push_back(&WinstonTheWolf(world, coordinates_t{ 4, 2}));
+	organisms.push_back(&Sheep(world, coordinates_t{ 0, 3}));
+	organisms.push_back(&WinstonTheWolf(world, coordinates_t{ 4, 6}));
+
+	for each (Organism* org in organisms)
 	{
-		world.AddOrganism(organisms[i]);
+		world.AddOrganism(org);
 	}
 	
 	char c = 'n';
@@ -43,20 +58,21 @@ int main()
 		for (size_t i = 0; i < t; i++)
 		{
 			system("CLS");
+			Output::GoToXY(0, 0);
+			world.DoTurn();
+			turns++;
+
+			world.PrintWorld();
+
 			Output::GoToXY(0, CONSOLE_HEIGHT - 8);
 			std::cout << "Programowanie Obiektowe projekt 1: Owca" << std::endl;
 			std::cout << "Autor: Marcin Szycik 165116" << std::endl;
 			std::cout << "n = new turn" << std::endl << "q = quit" << std::endl << "t = input turns count" << std::endl;
-			std::cout << "Turn " << turns << std::endl;
-			std::cout << "Alive organisms: " << world.GetOrganismCount();
+			std::cout << "Turn: " << turns << std::endl;
+			std::cout << "Population: " << world.GetOrganismCount();
 
-			Output::AppendLog("Turn " + std::to_string(turns));
-			Output::AppendLog("Alive organisms: " + std::to_string(world.GetOrganismCount()));
-
-			Output::GoToXY(0, 0);
-			world.DoTurn();
-			turns++;
-			world.PrintWorld();
+			Output::log << "Turn: " << turns << std::endl;
+			Output::log << "Population: " << world.GetOrganismCount() << std::endl;
 		}
 		t = 1;
 		c = _getch();

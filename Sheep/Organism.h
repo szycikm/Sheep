@@ -1,17 +1,21 @@
 #pragma once
 #include "Coordinates.h"
 
+#define ADULT_AGE 5
+
 class World;
 class Organism
 {
 protected:
-	coordinates_t coordinates;
+	coordinates_t position;
 	int age;
 	char type;
 	int strength, initiative;
+	coordinates_t RandomizeNextField(coordinates_t oldPosition);
 public:
 	World& fromWorld;
-	Organism(World& fromWorld, size_t x, size_t y);
+	Organism(World& fromWorld, coordinates_t position);
+	virtual Organism* Clone(World& fromWorld, coordinates_t position) = 0;
 	virtual void Action() = 0;
 	char GetType() const;
 	char Draw() const;
@@ -19,5 +23,5 @@ public:
 	int GetAge() const;
 	int GetStrength() const;
 	int GetInitiative() const;
-	void IncrementAge();
+	virtual void IncrementAge();
 };

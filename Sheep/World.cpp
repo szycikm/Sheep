@@ -39,22 +39,43 @@ Organism* World::isFieldOccupied(coordinates_t questioner)
 void World::DoTurn()
 {
 	std::sort(organisms.begin(), organisms.end(), SortList);
-	for each (Organism* org in organisms)
+	for (size_t i = 0; i < GetOrganismCount(); i++)
 	{
-		if (org != nullptr)
+		if (organisms[i] != nullptr)
+			organisms[i]->Action();
+
+		if (organisms[i] != nullptr) // again, because this organism might have just stepped into stronger animal
+			organisms[i]->IncrementAge();
+	}
+
+	for (size_t i = 0; i < GetOrganismCount(); i++)
+	{
+		if (organisms[i] == nullptr)
 		{
-			std::cout << "akcja " << org->GetType() << " | (" << org->GetXY().x << "," << org->GetXY().y << ") | sila=" << org->GetStrength() << " | wiek=" << org->GetAge() << " | inicjatywa=" << org->GetInitiative() << std::endl; // TODO remove this debug nfo
-			org->Action();
-			org->IncrementAge();
+			organisms.erase(organisms.begin() + i);
+			i--; // because we just deleted i element
 		}
 	}
 }
 
-void World::AddOrganism(Organism *o)
+bool World::AddOrganism(Organism *o)
 {
 	// TODO add collision support while adding new organisms
-	if (o->GetXY().x > maxxy.x || o->GetXY().y > maxxy.y) return; // organism out of this world -> don't add it
-	organisms.push_back(o);// add to organism list
+	if (o->GetXY().x >= maxxy.x || o->GetXY().y >= maxxy.y || o->GetXY().x < 0 || o->GetXY().y < 0)
+	{
+		Output::log << "Organism coordinates outside of this world" << std::endl;
+		return false;
+	}
+	else if (isFieldOccupied(o->GetXY()))
+	{
+		Output::log << "Field already occupied" << std::endl;
+		return false;
+	}
+	else
+	{
+		organisms.push_back(o);
+		return true;
+	}
 }
 
 void World::RemoveOrganism(Organism* o)
@@ -62,7 +83,7 @@ void World::RemoveOrganism(Organism* o)
 	auto it = std::find(organisms.begin(), organisms.end(), o);
 	if (it != organisms.end())
 		organisms.at(it - organisms.begin()) = nullptr;
-		//organisms.erase(it);
+		//organisms.erase(it); // crashes loop
 }
 
 size_t World::GetOrganismCount()
@@ -72,16 +93,6 @@ size_t World::GetOrganismCount()
 
 void World::PrintWorld()
 {
-	// remove organisms that were killed in previous turn (they are now nullptrs)
-	for (size_t i = 0; i < GetOrganismCount(); i++)
-	{
-		if (organisms[i] == nullptr)
-		{
-			organisms.erase(organisms.begin() + i);
-			i--; // because we just deleted i element
-		}
-	}
-
 	// draw vertical thing for style points
 	for (size_t i = 0; i < CONSOLE_HEIGHT; i++)
 	{

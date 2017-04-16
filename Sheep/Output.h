@@ -1,16 +1,15 @@
 #pragma once
 #include <fstream>
+#include "Coordinates.h"
 
-#define GRID_LEFT_MARGIN 50
+#define GRID_LEFT_MARGIN 60
 #define CONSOLE_HEIGHT 30
 
 class Output
 {
-private:
-	static std::ofstream file;
 public:
-	static void GoToXY(size_t x, size_t y);
-	static void InitializeLog(std::string filename);
-	static void AppendLog(std::string line);
+	static std::ofstream log;
+	Output(std::string filename);
+	static void GoToXY(short x, short y);
 	~Output();
 };

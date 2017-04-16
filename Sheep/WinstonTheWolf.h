@@ -4,5 +4,6 @@
 class WinstonTheWolf : public Animal
 {
 public:
-	WinstonTheWolf(World& fromWorld, size_t x, size_t y);
+	WinstonTheWolf(World& fromWorld, coordinates_t position);
+	WinstonTheWolf* Clone(World& fromWorld, coordinates_t position) override;
 };

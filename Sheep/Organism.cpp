@@ -1,11 +1,51 @@
-#include <locale>
+#include <iostream>
 #include "Organism.h"
+#include "World.h"
+#include "Names.h"
 
-Organism::Organism(World& fromWorld, size_t x, size_t y): fromWorld(fromWorld), age(0)
+// randomizes new coordinates respecting the world limits
+coordinates_t Organism::RandomizeNextField(coordinates_t oldPosition)
 {
-	coordinates.x = x;
-	coordinates.y = y;
+	auto nextPosition = oldPosition;
+	auto cont = true;
+	while (cont)
+	{
+		switch (rand() % 4)
+		{
+		case 0:
+			if (nextPosition.x +1 < fromWorld.GetMaxXY().x)
+			{
+				nextPosition.x++;
+				cont = false;
+			}
+			break;
+		case 1:
+			if (nextPosition.x > 0)
+			{
+				nextPosition.x--;
+				cont = false;
+			}
+			break;
+		case 2:
+			if (nextPosition.y +1 < fromWorld.GetMaxXY().y)
+			{
+				nextPosition.y++;
+				cont = false;
+			}
+			break;
+		case 3:
+			if (nextPosition.y > 0)
+			{
+				nextPosition.y--;
+				cont = false;
+			}
+			break;
+		}
+	}
+	return nextPosition;
 }
+
+Organism::Organism(World& fromWorld, coordinates_t position): fromWorld(fromWorld), position(position), age(0){}
 
 char Organism::GetType() const
 {
@@ -14,13 +54,13 @@ char Organism::GetType() const
 
 char Organism::Draw() const
 {
-	// if organism is below 5 turns draw him small. Just for fun.
-	return age <= 5 ? std::tolower(type, std::locale()) : type;
+	// if organism is below 5 turns draw it small. Just for fun.
+	return age <= ADULT_AGE ? Names::GetLowercaseSymbol(type) : type;
 }
 
 coordinates_t Organism::GetXY() const
 {
-	return coordinates;
+	return position;
 }
 
 int Organism::GetAge() const
