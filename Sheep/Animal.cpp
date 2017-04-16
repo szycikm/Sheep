@@ -33,18 +33,13 @@ bool Animal::Collision(Organism* other)
 			Animal* child = dynamic_cast<Animal*>(Clone(fromWorld, newPosition[i]));
 			if (fromWorld.AddOrganism(child))
 			{
-				Output::log << "D'awww. " << Names::GetSpeciesName(this->GetType()) << " " << this->GetName() << " and " << Names::GetSpeciesName(that->GetType()) << " " << that->GetName() << " are having a baby!" << std::endl;
-				std::cout << "D'awww. " << Names::GetSpeciesName(this->GetType()) << " " << this->GetName() << " and " << Names::GetSpeciesName(that->GetType()) << " " << that->GetName() << " are having a baby!" << std::endl;
-				Output::log << "It's name is " << child->GetName() << " and it's going to do great things" << std::endl;
-				std::cout << "It's name is " << child->GetName() << " and it's going to do great things" << std::endl;
+				Output::log << "D'awww. " << Names::GetSpeciesName(this->GetType()) << " " << this->GetName() << " and " << Names::GetSpeciesName(that->GetType()) << " " << that->GetName() << " are having a baby!"  << "And it's name is " << child->GetName() << std::endl;
 				return false;
 			}
 		}
 
 		// no place for new animal
 		Output::log << Names::GetSpeciesName(this->GetType()) << " " << this->GetName() << " and " << Names::GetSpeciesName(that->GetType()) << " " << that->GetName() << " wanted to have a baby, but there was no place for it" << std::endl;
-		std::cout << Names::GetSpeciesName(this->GetType()) << " " << this->GetName() << " and " << Names::GetSpeciesName(that->GetType()) << " " << that->GetName() << " wanted to have a baby, but there was no place for it" << std::endl;
-
 		return false;
 	}
 	else
@@ -55,14 +50,12 @@ bool Animal::Collision(Organism* other)
 		if (strength >= other->GetStrength())
 		{
 			Output::log << "Yeah! " << Names::GetSpeciesName(this->GetType()) << " " << this->GetName() << " ate " << Names::GetSpeciesName(other->GetType()) << otherName << "!" << std::endl;
-			std::cout << "Yeah! " << Names::GetSpeciesName(this->GetType()) << " " << this->GetName() << " ate " << Names::GetSpeciesName(other->GetType()) << otherName << "!" << std::endl;
 			other->fromWorld.RemoveOrganism(other);
 			return true;
 		}
 		else
 		{
 			Output::log << "Oh no! " << Names::GetSpeciesName(other->GetType()) << otherName << " ate " << Names::GetSpeciesName(this->GetType()) << " " << this->GetName() << "!" << std::endl;
-			std::cout << "Oh no! " << Names::GetSpeciesName(other->GetType()) << otherName << " ate " << Names::GetSpeciesName(this->GetType()) << " " << this->GetName() << "!" << std::endl;
 			fromWorld.RemoveOrganism(this);
 			return false;
 		}
@@ -78,7 +71,6 @@ void Animal::Action()
 	{
 		position = nextPosition;
 		Output::log << Names::GetSpeciesName(type) << " " << GetName() << " moved to (" << GetXY().x  << "," << GetXY().y << ")" << std::endl;
-		std::cout << Names::GetSpeciesName(type) << " " << GetName() << " moved to (" << GetXY().x << "," << GetXY().y << ")" << std::endl;
 	}
 }
 
@@ -93,6 +85,5 @@ void Animal::IncrementAge()
 	if (age == ADULT_AGE)
 	{
 		Output::log << Names::GetSpeciesName(type) << " " << GetName() << " is all grown up now!" << std::endl;
-		std::cout << Names::GetSpeciesName(type) << " " << GetName() << " is all grown up now!" << std::endl;
 	}
 }

@@ -6,7 +6,7 @@ WinstonTheWolf::WinstonTheWolf(World& fromWorld, coordinates_t position) : Anima
 	type = 'W';
 	strength = 9;
 	initiative = 5;
-	name = Names::GetRandomName(type);
+	name = Names::GetRandomName();
 }
 
 WinstonTheWolf* WinstonTheWolf::Clone(World& fromWorld, coordinates_t position)

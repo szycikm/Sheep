@@ -2,11 +2,13 @@
 #include <random>
 #include "Names.h"
 
-std::map<char, species_t> Names::species;
+std::map<char, char*> Names::speciesNames;
+std::vector<char*> Names::names;
 
-Names::Names(std::map<char, species_t> species)
+Names::Names(std::map<char, char*> speciesNames, std::vector<char*> names)
 {
-	this->species = species;
+	this->speciesNames = speciesNames;
+	this->names = names;
 }
 
 const char Names::GetLowercaseSymbol(char type)
@@ -16,10 +18,10 @@ const char Names::GetLowercaseSymbol(char type)
 
 const char* Names::GetSpeciesName(char type)
 {
-	return species.count(type) == 1 ? species.at(type).fullName : "kappa";
+	return speciesNames.count(type) == 1 ? speciesNames.at(type) : "Undefined";
 }
 
-const char* Names::GetRandomName(char type)
+const char* Names::GetRandomName()
 {
-	return species.count(type) == 1 ? species.at(type).names[rand() % species.at(type).names.size()] : "kappa";
+	return names[rand() % names.size()];
 }

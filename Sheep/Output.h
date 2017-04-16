@@ -1,8 +1,6 @@
 #pragma once
 #include <fstream>
-#include "Coordinates.h"
 
-#define GRID_LEFT_MARGIN 60
 #define CONSOLE_HEIGHT 30
 
 class Output

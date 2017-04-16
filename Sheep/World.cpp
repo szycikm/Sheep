@@ -93,16 +93,9 @@ size_t World::GetOrganismCount()
 
 void World::PrintWorld()
 {
-	// draw vertical thing for style points
-	for (size_t i = 0; i < CONSOLE_HEIGHT; i++)
-	{
-		Output::GoToXY(GRID_LEFT_MARGIN - 1, i);
-		std::cout << "|";
-	}
-
 	for each (Organism* org in organisms)
 	{
-		Output::GoToXY(org->GetXY().x + GRID_LEFT_MARGIN, org->GetXY().y);
+		Output::GoToXY(org->GetXY().x, org->GetXY().y);
 		std::cout << org->Draw();
 	}
 }
