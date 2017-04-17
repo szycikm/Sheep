@@ -4,7 +4,8 @@
 #include "Animal.h"
 #include "World.h"
 
-bool SortList(const Organism* first, const Organism* second)
+
+bool SortOrganisms(const Organism* first, const Organism* second)
 {
 	if (first->GetInitiative() == second->GetInitiative())
 		return first->GetAge() > second->GetAge();
@@ -38,8 +39,9 @@ Organism* World::isFieldOccupied(coordinates_t questioner)
 
 void World::DoTurn()
 {
-	std::sort(organisms.begin(), organisms.end(), SortList);
-	for (size_t i = 0; i < GetOrganismCount(); i++)
+	std::sort(organisms.begin(), organisms.end(), SortOrganisms);
+	size_t cnt = GetOrganismCount(); // organism count can get bigger so it's important to keep it in separate variable
+	for (size_t i = 0; i < cnt; i++)
 	{
 		if (organisms[i] != nullptr)
 			organisms[i]->Action();

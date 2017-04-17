@@ -11,12 +11,18 @@
 #include "WinstonTheWolf.h"
 #include "Sheep.h"
 #include "Fox.h"
+#include "Turtle.h"
 #include "Output.h"
 #include "Names.h"
+
+#define WORLD_X 15
+#define WORLD_Y 10
+#define SPECIES_START_MAX 10
 
 int main()
 {
 	srand(time(NULL));
+
 	// initialize log file
 	Output output("..\\sheep.log");
 
@@ -27,27 +33,39 @@ int main()
 	speciesNames['W'] = "Wolf";
 	speciesNames['S'] = "Sheep";
 	speciesNames['F'] = "Fox";
+	speciesNames['T'] = "Turtle";
 	std::vector<char*> randomNames = {
 		"Jake", "Winston", "Harry", "Larry", "Lenny", "Johnny", "Spencer", "Fred", "Joey", "Steve", "Bob",
 		"Mascara", "Mooriela", "Vicky", "Christina", "Vicky", "Daisy", "Elizabeth", "Dolores", "Esmeralda", "Matilda", "Jenny"
 	};
 	Names names(speciesNames, randomNames);
 
-	World world(15, 10);
+	World world(WORLD_X, WORLD_Y);
 	auto turns = 0;
-	std::vector<Organism*> organisms;
-	//organisms.push_back(&WinstonTheWolf(world, coordinates_t{ 1, 4 }));
-	organisms.push_back(&Sheep(world, coordinates_t{ 2, 9 }));
-	organisms.push_back(&Sheep(world, coordinates_t{ 9, 5}));
-	organisms.push_back(&Fox(world, coordinates_t{ 1, 1 }));
-	//organisms.push_back(&WinstonTheWolf(world, coordinates_t{ 5, 2 }));
-	//organisms.push_back(&Fox(world, coordinates_t{ 5, 8 }));
-	organisms.push_back(&Sheep(world, coordinates_t{ 0, 3}));
-	organisms.push_back(&Fox(world, coordinates_t{ 6, 7}));
 
-	for each (Organism* org in organisms)
+	int wolfcnt = rand() % SPECIES_START_MAX;
+	int sheepcnt = rand() % SPECIES_START_MAX;
+	int foxcnt = rand() % SPECIES_START_MAX;
+	int turtlecnt = rand() % SPECIES_START_MAX;
+
+	WinstonTheWolf wolf(world, coordinates_t{ 0, 0 });
+	Sheep sheep(world, coordinates_t{ 0, 0 });
+	Fox fox(world, coordinates_t{ 0, 0 });
+	Turtle turtle(world, coordinates_t{ 0, 0 });
+
+	for (size_t i = 0; i < SPECIES_START_MAX; i++)
 	{
-		world.AddOrganism(org);
+		if (wolfcnt > i)
+			world.AddOrganism(wolf.Clone(world, coordinates_t{ rand() % WORLD_X, rand() % WORLD_Y }));
+
+		if (sheepcnt > i)
+			world.AddOrganism(sheep.Clone(world, coordinates_t{ rand() % WORLD_X, rand() % WORLD_Y }));
+
+		if (foxcnt > i)
+			world.AddOrganism(fox.Clone(world, coordinates_t{ rand() % WORLD_X, rand() % WORLD_Y }));
+
+		if (turtlecnt > i)
+			world.AddOrganism(turtle.Clone(world, coordinates_t{ rand() % WORLD_X, rand() % WORLD_Y }));
 	}
 	
 	char c = 'n';

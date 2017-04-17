@@ -3,12 +3,11 @@
 #include "World.h"
 #include "Output.h"
 
-Fox::Fox(World & fromWorld, coordinates_t position) : Animal(fromWorld, position)
+Fox::Fox(World& fromWorld, coordinates_t position) : Animal(fromWorld, position)
 {
-	type = 'F';
-	strength = 3;
-	initiative = 7;
-	name = Names::GetRandomName();
+	this->SetType('F');
+	this->SetStrength(3);
+	this->SetInitiative(7);
 }
 
 Fox* Fox::Clone(World& fromWorld, coordinates_t position)
@@ -18,10 +17,10 @@ Fox* Fox::Clone(World& fromWorld, coordinates_t position)
 
 void Fox::Action()
 {
-	// check all directions and decide where to move (if at all)
+	// sneaky fox checks all directions and decides where to move (if at all)
 	for each (coordinates_t coords in RandomizeFields())
 	{
-		auto collider = fromWorld.isFieldOccupied(coords);
+		auto collider = this->GetWorld().isFieldOccupied(coords);
 		// move to empty field, or attack weaker organism
 		if (collider == nullptr || (collider != nullptr && collider->GetStrength() <= this->GetStrength()))
 		{

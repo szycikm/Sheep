@@ -1,12 +1,10 @@
 #include "WinstonTheWolf.h"
-#include "Names.h"
 
 WinstonTheWolf::WinstonTheWolf(World& fromWorld, coordinates_t position) : Animal(fromWorld, position)
 {
-	type = 'W';
-	strength = 9;
-	initiative = 5;
-	name = Names::GetRandomName();
+	this->SetType('W');
+	this->SetStrength(9);
+	this->SetInitiative(5);
 }
 
 WinstonTheWolf* WinstonTheWolf::Clone(World& fromWorld, coordinates_t position)

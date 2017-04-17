@@ -1,4 +1,3 @@
-#include <iostream>
 #include <string>
 #include "Animal.h"
 #include "Output.h"
@@ -10,10 +9,10 @@ bool Animal::Collision(Organism* other)
 {
 	if (other == nullptr)
 	{
-		// nothing stands on this field -> just move there
+		// nothing stands on new field -> just move there
 		return true;
 	}
-	else if (type == other->GetType())
+	else if (this->GetType() == other->GetType())
 	{
 		// animal of the same type stands on this field -> just have sex and don't move there
 
@@ -22,66 +21,93 @@ bool Animal::Collision(Organism* other)
 		// check all four directions in random order
 		for each (coordinates_t coords in RandomizeFields())
 		{
-			Animal* child = dynamic_cast<Animal*>(Clone(fromWorld, coords));
-			if (fromWorld.AddOrganism(child))
+			Animal* child = dynamic_cast<Animal*>(this->Clone(this->GetWorld(), coords));
+			if (this->GetWorld().AddOrganism(child))
 			{
-				Output::log << "D'awww. " << Names::GetSpeciesName(this->GetType()) << " " << this->GetName() << " and " << Names::GetSpeciesName(that->GetType()) << " " << that->GetName() << " are having a baby! And it's name is " << child->GetName() << std::endl;
+				Output::log << "D'awww. " << this->Introduce() << " and " << that->Introduce() << " are having a baby! And it's name is " << child->GetName() << std::endl;
 				return false;
 			}
 		}
 
 		// no place for new animal
-		Output::log << Names::GetSpeciesName(this->GetType()) << " " << this->GetName() << " and " << Names::GetSpeciesName(that->GetType()) << " " << that->GetName() << " wanted to have a baby, but the world decided otherwise" << std::endl;
+		Output::log << this->Introduce() << " and " << that->Introduce() << " wanted to have a baby, but the world decided otherwise" << std::endl;
 		return false;
 	}
 	else
 	{
 		// stronger (or attacker) wins and takes looser's field
-		std::string otherName = dynamic_cast<Animal*>(other) != nullptr ? (dynamic_cast<Animal*>(other))->GetName() : "";
-		if (otherName != "") otherName = " " + otherName;
-		if (strength >= other->GetStrength())
+		Animal* that = dynamic_cast<Animal*>(other);
+		std::string otherName = that->GetName();
+		if (that->GetName() != "") otherName = " " + otherName;
+		
+		if (this->GetStrength() >= that->GetStrength())
 		{
-			Output::log << "Yeah! " << Names::GetSpeciesName(this->GetType()) << " " << this->GetName() << " ate " << Names::GetSpeciesName(other->GetType()) << otherName << "!" << std::endl;
-			other->fromWorld.RemoveOrganism(other);
-			return true;
+			if (that->TryResistAttack(this))
+			{
+				Output::log << that->Introduce() << " resisted " << this->Introduce() << "'s attack!" << std::endl;
+				return false; // other organism reflected the attack -> don't move
+			}
+			else
+			{
+				Output::log << "Yeah! " << this->Introduce() << " ate " << Names::GetSpeciesName(that->GetType()) << otherName << "!" << std::endl;
+				other->GetWorld().RemoveOrganism(other);
+				return true;
+			}
 		}
 		else
 		{
-			Output::log << "Oh no! " << Names::GetSpeciesName(other->GetType()) << otherName << " ate " << Names::GetSpeciesName(this->GetType()) << " " << this->GetName() << "!" << std::endl;
-			fromWorld.RemoveOrganism(this);
+			Output::log << "Oh no! " << Names::GetSpeciesName(other->GetType()) << otherName << " ate " << this->Introduce() << "!" << std::endl;
+			this->GetWorld().RemoveOrganism(this);
 			return false;
 		}
 	}
 }
 
+coordinates_t Animal::RandomizeField()
+{
+	return RandomizeFields()[0]; // just grab first random generated value
+}
+
 // detect collisions and move to the next position if necessary
 void Animal::Move(coordinates_t nextPosition)
 {
-	auto collider = fromWorld.isFieldOccupied(nextPosition);
+	auto collider = this->GetWorld().isFieldOccupied(nextPosition);
 	if (Collision(collider))
 	{
 		position = nextPosition;
-		Output::log << Names::GetSpeciesName(type) << " " << GetName() << " moved to (" << GetXY().x << "," << GetXY().y << ")" << std::endl;
+		Output::log << this->Introduce() << " moved to (" << this->GetXY().x << "," << this->GetXY().y << ")" << std::endl;
 	}
+}
+
+Animal::Animal(World& fromWorld, coordinates_t position) : Organism(fromWorld, position)
+{
+	this->name = Names::GetRandomName();
 }
 
 // default animal movement
 void Animal::Action()
 {
-	auto nextPosition = RandomizeFields()[0]; // just grab first random generated value
-	Move(nextPosition);
+	Move(RandomizeField());
+}
+
+bool Animal::TryResistAttack(Organism* attacker)
+{
+	return false; // normal animals can't resist attack
 }
 
 const char* Animal::GetName()
 {
-	return name;
+	return this->name;
 }
 
 void Animal::IncrementAge()
 {
 	Organism::IncrementAge();
-	if (age == ADULT_AGE)
-	{
-		Output::log << Names::GetSpeciesName(type) << " " << GetName() << " is all grown up now!" << std::endl;
-	}
+	if (this->GetAge() == ADULT_AGE)
+		Output::log << this->Introduce() << " is all grown up now!" << std::endl;
+}
+
+std::string Animal::Introduce()
+{
+	return std::string(Names::GetSpeciesName(this->GetType())) + " " + this->GetName();
 }

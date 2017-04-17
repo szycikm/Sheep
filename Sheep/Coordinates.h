@@ -1,6 +1,6 @@
 #pragma once
 typedef struct
 {
-	size_t x;
-	size_t y;
+	int x;
+	int y;
 } coordinates_t;

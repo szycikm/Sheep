@@ -3,60 +3,81 @@
 #include "World.h"
 #include "Names.h"
 
-// randomizes new coordinates respecting the world limits
-
-
+// randomizes 2 to 4 new coordinates respecting the world limits
 std::vector<coordinates_t> Organism::RandomizeFields()
 {
 	std::vector<coordinates_t> randomized;
 
-	if (position.x + 1 < fromWorld.GetMaxXY().x)
-		randomized.push_back(coordinates_t{ position.x + 1, position.y });
-	if (position.x > 0)
-		randomized.push_back(coordinates_t{ position.x - 1, position.y });
-	if (position.y + 1 < fromWorld.GetMaxXY().y)
-		randomized.push_back(coordinates_t{ position.x, position.y + 1 });
-	if (position.y > 0)
-		randomized.push_back(coordinates_t{ position.x, position.y - 1 });
+	if (this->GetXY().x + 1 < fromWorld.GetMaxXY().x)
+		randomized.push_back(coordinates_t{ this->GetXY().x + 1, this->GetXY().y });
+	if (this->GetXY().x > 0)
+		randomized.push_back(coordinates_t{ this->GetXY().x - 1, this->GetXY().y });
+	if (this->GetXY().y + 1 < fromWorld.GetMaxXY().y)
+		randomized.push_back(coordinates_t{ this->GetXY().x, this->GetXY().y + 1 });
+	if (this->GetXY().y > 0)
+		randomized.push_back(coordinates_t{ this->GetXY().x, this->GetXY().y - 1 });
 
 	std::random_shuffle(randomized.begin(), randomized.end());
 	return randomized;
 }
 
-Organism::Organism(World& fromWorld, coordinates_t position): fromWorld(fromWorld), position(position), age(0){}
+Organism::Organism(World& fromWorld, coordinates_t position): fromWorld(fromWorld), position(position)
+{
+	this->age = 0;
+}
 
 char Organism::GetType() const
 {
-	return type;
+	return this->type;
 }
 
 char Organism::Draw() const
 {
 	// if organism is below 5 turns draw it small. Just for fun.
-	return age < ADULT_AGE ? Names::GetLowercaseSymbol(type) : type;
+	return this->GetAge() < ADULT_AGE ? Names::GetLowercaseSymbol(this->GetType()) : this->GetType();
 }
 
 coordinates_t Organism::GetXY() const
 {
-	return position;
+	return this->position;
 }
 
 int Organism::GetAge() const
 {
-	return age;
+	return this->age;
 }
 
 int Organism::GetStrength() const
 {
-	return strength;
+	return this->strength;
 }
 
 int Organism::GetInitiative() const
 {
-	return initiative;
+	return this->initiative;
+}
+
+World& Organism::GetWorld() const
+{
+	return this->fromWorld;
+}
+
+void Organism::SetType(int type)
+{
+	this->type = type;
+}
+
+void Organism::SetStrength(int strength)
+{
+	this->strength = strength;
+}
+
+void Organism::SetInitiative(int initiative)
+{
+	this->initiative = initiative;
 }
 
 void Organism::IncrementAge()
 {
-	age++;
+	this->age++;
 }
