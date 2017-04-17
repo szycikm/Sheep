@@ -6,14 +6,15 @@
 #include <vector>
 #include <time.h>
 #include <windows.h>
+#include "Output.h"
+#include "Names.h"
 #include "World.h"
 #include "Organism.h"
 #include "WinstonTheWolf.h"
 #include "Sheep.h"
 #include "Fox.h"
 #include "Turtle.h"
-#include "Output.h"
-#include "Names.h"
+#include "Antelope.h"
 
 #define WORLD_X 15
 #define WORLD_Y 10
@@ -34,6 +35,7 @@ int main()
 	speciesNames['S'] = "Sheep";
 	speciesNames['F'] = "Fox";
 	speciesNames['T'] = "Turtle";
+	speciesNames['A'] = "Antelope";
 	std::vector<char*> randomNames = {
 		"Jake", "Winston", "Harry", "Larry", "Lenny", "Johnny", "Spencer", "Fred", "Joey", "Steve", "Bob",
 		"Mascara", "Mooriela", "Vicky", "Christina", "Vicky", "Daisy", "Elizabeth", "Dolores", "Esmeralda", "Matilda", "Jenny"
@@ -47,11 +49,13 @@ int main()
 	int sheepcnt = rand() % SPECIES_START_MAX;
 	int foxcnt = rand() % SPECIES_START_MAX;
 	int turtlecnt = rand() % SPECIES_START_MAX;
+	int antelopecnt = rand() % SPECIES_START_MAX;
 
 	WinstonTheWolf wolf(world, coordinates_t{ 0, 0 });
 	Sheep sheep(world, coordinates_t{ 0, 0 });
 	Fox fox(world, coordinates_t{ 0, 0 });
 	Turtle turtle(world, coordinates_t{ 0, 0 });
+	Antelope antelope(world, coordinates_t{ 0, 0 });
 
 	for (size_t i = 0; i < SPECIES_START_MAX; i++)
 	{
@@ -66,6 +70,9 @@ int main()
 
 		if (turtlecnt > i)
 			world.AddOrganism(turtle.Clone(world, coordinates_t{ rand() % WORLD_X, rand() % WORLD_Y }));
+
+		if (antelopecnt > i)
+			world.AddOrganism(antelope.Clone(world, coordinates_t{ rand() % WORLD_X, rand() % WORLD_Y }));
 	}
 	
 	char c = 'n';
