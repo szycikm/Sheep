@@ -2,9 +2,9 @@
 
 Sheep::Sheep(World& fromWorld, coordinates_t position) : Animal(fromWorld, position)
 {
-	this->SetType('S');
-	this->SetStrength(4);
-	this->SetInitiative(4);
+	this->type = 'S';
+	this->strength = 4;
+	this->initiative = 4;
 }
 
 Sheep* Sheep::Clone(World& fromWorld, coordinates_t position)

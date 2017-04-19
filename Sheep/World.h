@@ -11,12 +11,12 @@ private:
 	coordinates_t maxxy;
 public:
 	World(size_t maxx, size_t maxy);
-	coordinates_t GetMaxXY();
+	coordinates_t GetMaxXY() const;
 	Organism* isFieldOccupied(coordinates_t questioner);
 	void DoTurn();
 	bool AddOrganism(Organism *o);
 	void RemoveOrganism(Organism *o);
-	size_t GetOrganismCount();
-	void PrintWorld();
+	size_t GetOrganismCount() const;
+	void PrintWorld() const;
 	~World();
 };

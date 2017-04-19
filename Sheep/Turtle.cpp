@@ -4,9 +4,9 @@
 
 Turtle::Turtle(World& fromWorld, coordinates_t position) : Animal(fromWorld, position)
 {
-	this->SetType('T');
-	this->SetStrength(2);
-	this->SetInitiative(1);
+	this->type = 'T';
+	this->strength = 2;
+	this->initiative = 1;
 }
 
 Turtle* Turtle::Clone(World& fromWorld, coordinates_t position)
@@ -25,5 +25,5 @@ void Turtle::Action()
 	if (rand() % 4 <= 0)
 		Animal::Action();
 	else
-		Output::log << Names::GetSpeciesName(this->GetType()) << " " << this->GetName() << " decided not to move" << std::endl;
+		Output::log << Names::GetSpeciesName(this->type) << " " << this->name << " decided not to move" << std::endl;
 }

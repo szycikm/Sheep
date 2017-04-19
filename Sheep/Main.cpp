@@ -15,6 +15,7 @@
 #include "Fox.h"
 #include "Turtle.h"
 #include "Antelope.h"
+#include "Human.h"
 
 #define WORLD_X 15
 #define WORLD_Y 10
@@ -27,7 +28,7 @@ int main()
 	// initialize log file
 	Output output("..\\sheep.log");
 
-	// start log window
+	// start logger window
 	system("start ..\\Debug\\SheepLogger");
 
 	std::map<char, char*> speciesNames;
@@ -36,6 +37,7 @@ int main()
 	speciesNames['F'] = "Fox";
 	speciesNames['T'] = "Turtle";
 	speciesNames['A'] = "Antelope";
+	speciesNames['H'] = "Human";
 	std::vector<char*> randomNames = {
 		"Jake", "Winston", "Harry", "Larry", "Lenny", "Johnny", "Spencer", "Fred", "Joey", "Steve", "Bob",
 		"Mascara", "Mooriela", "Vicky", "Christina", "Vicky", "Daisy", "Elizabeth", "Dolores", "Esmeralda", "Matilda", "Jenny"
@@ -56,6 +58,8 @@ int main()
 	Fox fox(world, coordinates_t{ 0, 0 });
 	Turtle turtle(world, coordinates_t{ 0, 0 });
 	Antelope antelope(world, coordinates_t{ 0, 0 });
+	Human human(world, coordinates_t{ rand() % WORLD_X, rand() % WORLD_Y }); // HUMAN AFTER ALL. (actually add him before all)
+	world.AddOrganism(&human);
 
 	for (size_t i = 0; i < SPECIES_START_MAX; i++)
 	{
@@ -74,40 +78,37 @@ int main()
 		if (antelopecnt > i)
 			world.AddOrganism(antelope.Clone(world, coordinates_t{ rand() % WORLD_X, rand() % WORLD_Y }));
 	}
+
+
 	
-	char c = 'n';
-	size_t t = 1;
-	while (c != 'q')
+	char c = '0';
+	while (c != KEY_QUIT)
 	{
-		if (c == 't')
-		{
-			Output::GoToXY(0, CONSOLE_HEIGHT - 1);
-			std::cout << "Input turns count: ";
-			scanf_s("%i", &t);
-		}
-		
-		for (size_t i = 0; i < t; i++)
-		{
-			system("CLS");
+		system("CLS");
 
-			Output::GoToXY(0, CONSOLE_HEIGHT - 8);
-			std::cout << "Programowanie Obiektowe projekt 1: Owca" << std::endl;
-			std::cout << "Autor: Marcin Szycik 165116" << std::endl;
-			std::cout << "n = new turn" << std::endl << "q = quit" << std::endl << "t = input turns count" << std::endl;
-			Output::log << "========== Turn: " << turns << " ========== " << std::endl;
-			std::cout << "Turn: " << turns << std::endl;
+		Output::GoToXY(0, CONSOLE_HEIGHT - 8);
+		std::cout << "Programowanie Obiektowe projekt 1: Owca" << std::endl;
+		std::cout << "Autor: Marcin Szycik 165116" << std::endl;
+		std::cout << "arrows = move human" << std::endl << "x = human special ability" << std::endl << "s/l = save/load state" << std::endl << "q = quit" << std::endl;
+		Output::log << "========== Turn: " << turns << " ========== " << std::endl << "Population: " << world.GetOrganismCount() << std::endl;
+		std::cout << "Turn: " << turns << std::endl << "Population: " << world.GetOrganismCount() << std::endl;
 
+		world.PrintWorld();
+
+		c = _getch();
+		switch (c)
+		{
+		case KEY_SAVE:
+			// TODO save state
+			break;
+		case KEY_LOAD:
+			// TODO load state
+			break;
+		default:
 			world.DoTurn();
 			turns++;
-
-			Output::GoToXY(0, CONSOLE_HEIGHT - 2);
-			Output::log << "Population: " << world.GetOrganismCount() << std::endl;
-			std::cout << "Population: " << world.GetOrganismCount() << std::endl;
-
-			world.PrintWorld();
+			break;
 		}
-		t = 1;
-		c = _getch();
 	}
 
 	// terminate logger window

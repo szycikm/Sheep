@@ -65,7 +65,7 @@ bool Animal::Collision(Organism* other)
 
 coordinates_t Animal::RandomizeField()
 {
-	return RandomizeFields()[0]; // just grab first random generated value
+	return this->RandomizeFields()[0]; // just grab first random generated value
 }
 
 // detect collisions and move to the next position if necessary
@@ -75,7 +75,7 @@ void Animal::Move(coordinates_t nextPosition)
 	if (Collision(collider))
 	{
 		position = nextPosition;
-		Output::log << this->Introduce() << " moved to (" << this->GetXY().x << "," << this->GetXY().y << ")" << std::endl;
+		Output::log << this->Introduce() << " moved to (" << this->position.x << "," << this->position.y << ")" << std::endl;
 	}
 }
 
@@ -87,7 +87,7 @@ Animal::Animal(World& fromWorld, coordinates_t position) : Organism(fromWorld, p
 // default animal movement
 void Animal::Action()
 {
-	Move(RandomizeField());
+	this->Move(this->RandomizeField());
 }
 
 bool Animal::TryResistAttack(Organism* attacker)
@@ -95,7 +95,7 @@ bool Animal::TryResistAttack(Organism* attacker)
 	return false; // normal animals can't resist attack
 }
 
-const char* Animal::GetName()
+const char* Animal::GetName() const
 {
 	return this->name;
 }
@@ -107,7 +107,7 @@ void Animal::IncrementAge()
 		Output::log << this->Introduce() << " is all grown up now!" << std::endl;
 }
 
-std::string Animal::Introduce()
+std::string Animal::Introduce() const
 {
-	return std::string(Names::GetSpeciesName(this->GetType())) + " " + this->GetName();
+	return std::string(Names::GetSpeciesName(this->type)) + " " + this->name;
 }

@@ -5,9 +5,9 @@
 
 Fox::Fox(World& fromWorld, coordinates_t position) : Animal(fromWorld, position)
 {
-	this->SetType('F');
-	this->SetStrength(3);
-	this->SetInitiative(7);
+	this->type = 'F';
+	this->strength = 3;
+	this->initiative = 7;
 }
 
 Fox* Fox::Clone(World& fromWorld, coordinates_t position)
@@ -24,10 +24,10 @@ void Fox::Action()
 		// move to empty field, or attack weaker organism
 		if (collider == nullptr || (collider != nullptr && collider->GetStrength() <= this->GetStrength()))
 		{
-			Move(coords);
+			this->Move(coords);
 			return;
 		}
 	}
 
-	Output::log << Names::GetSpeciesName(this->GetType()) << " " << this->GetName() << " decided to stay in place" << std::endl;
+	Output::log << Names::GetSpeciesName(this->type) << " " << this->name<< " decided to stay in place" << std::endl;
 }

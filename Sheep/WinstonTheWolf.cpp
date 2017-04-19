@@ -2,9 +2,9 @@
 
 WinstonTheWolf::WinstonTheWolf(World& fromWorld, coordinates_t position) : Animal(fromWorld, position)
 {
-	this->SetType('W');
-	this->SetStrength(9);
-	this->SetInitiative(5);
+	this->type = 'W';
+	this->strength = 9;
+	this->initiative = 5;
 }
 
 WinstonTheWolf* WinstonTheWolf::Clone(World& fromWorld, coordinates_t position)

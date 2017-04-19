@@ -1,9 +1,9 @@
 #include <iostream>
 #include <algorithm>
+#include "World.h"
 #include "Output.h"
 #include "Animal.h"
-#include "World.h"
-
+#include "Human.h"
 
 bool SortOrganisms(const Organism* first, const Organism* second)
 {
@@ -15,18 +15,18 @@ bool SortOrganisms(const Organism* first, const Organism* second)
 
 World::World(size_t maxx, size_t maxy)
 {
-	maxxy.x = maxx;
-	maxxy.y = maxy;
+	this->maxxy.x = maxx;
+	this->maxxy.y = maxy;
 }
 
-coordinates_t World::GetMaxXY()
+coordinates_t World::GetMaxXY() const
 {
-	return maxxy;
+	return this->maxxy;
 }
 
 Organism* World::isFieldOccupied(coordinates_t questioner)
 {
-	for each (Organism* org in organisms)
+	for each (Organism* org in this->organisms)
 	{
 		if (org != nullptr)
 		{
@@ -39,22 +39,22 @@ Organism* World::isFieldOccupied(coordinates_t questioner)
 
 void World::DoTurn()
 {
-	std::sort(organisms.begin(), organisms.end(), SortOrganisms);
-	size_t cnt = GetOrganismCount(); // organism count can get bigger so it's important to keep it in separate variable
+	std::sort(this->organisms.begin(), this->organisms.end(), SortOrganisms);
+	size_t cnt = this->GetOrganismCount(); // organism count can get bigger so it's important to keep it in separate variable
 	for (size_t i = 0; i < cnt; i++)
 	{
-		if (organisms[i] != nullptr)
-			organisms[i]->Action();
+		if (this->organisms[i] != nullptr)
+			this->organisms[i]->Action();
 
-		if (organisms[i] != nullptr) // again, because this organism might have just stepped into stronger animal
-			organisms[i]->IncrementAge();
+		if (this->organisms[i] != nullptr) // again, because this organism might have just stepped into stronger animal
+			this->organisms[i]->IncrementAge();
 	}
 
-	for (size_t i = 0; i < GetOrganismCount(); i++)
+	for (size_t i = 0; i < this->GetOrganismCount(); i++)
 	{
-		if (organisms[i] == nullptr)
+		if (this->organisms[i] == nullptr)
 		{
-			organisms.erase(organisms.begin() + i);
+			this->organisms.erase(this->organisms.begin() + i);
 			i--; // because we just deleted i element
 		}
 	}
@@ -62,39 +62,39 @@ void World::DoTurn()
 
 bool World::AddOrganism(Organism *o)
 {
-	if (o->GetXY().x >= maxxy.x || o->GetXY().y >= maxxy.y || o->GetXY().x < 0 || o->GetXY().y < 0)
+	if (o->GetXY().x >= this->maxxy.x || o->GetXY().y >= this->maxxy.y || o->GetXY().x < 0 || o->GetXY().y < 0)
 	{
 		//Output::log << "Organism coordinates outside of this world" << std::endl;
 		return false;
 	}
-	else if (isFieldOccupied(o->GetXY()))
+	else if (this->isFieldOccupied(o->GetXY()))
 	{
 		//Output::log << "Field already occupied" << std::endl;
 		return false;
 	}
 	else
 	{
-		organisms.push_back(o);
+		this->organisms.push_back(o);
 		return true;
 	}
 }
 
 void World::RemoveOrganism(Organism* o)
 {
-	auto it = std::find(organisms.begin(), organisms.end(), o);
-	if (it != organisms.end())
-		organisms.at(it - organisms.begin()) = nullptr;
+	auto it = std::find(this->organisms.begin(), this->organisms.end(), o);
+	if (it != this->organisms.end())
+		this->organisms.at(it - this->organisms.begin()) = nullptr;
 		//organisms.erase(it); // crashes loop
 }
 
-size_t World::GetOrganismCount()
+size_t World::GetOrganismCount() const
 {
-	return organisms.size();
+	return this->organisms.size();
 }
 
-void World::PrintWorld()
+void World::PrintWorld() const
 {
-	for each (Organism* org in organisms)
+	for each (Organism* org in this->organisms)
 	{
 		Output::GoToXY(org->GetXY().x, org->GetXY().y);
 		std::cout << org->Draw();
@@ -103,5 +103,5 @@ void World::PrintWorld()
 
 World::~World()
 {
-	organisms.clear();
+	this->organisms.clear();
 }

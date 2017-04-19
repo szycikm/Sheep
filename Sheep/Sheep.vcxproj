@@ -151,6 +151,7 @@
     <ClInclude Include="Antelope.h" />
     <ClInclude Include="Coordinates.h" />
     <ClInclude Include="Fox.h" />
+    <ClInclude Include="Human.h" />
     <ClInclude Include="Names.h" />
     <ClInclude Include="Output.h" />
     <ClInclude Include="Organism.h" />
@@ -165,6 +166,7 @@
     <ClCompile Include="Animal.cpp" />
     <ClCompile Include="Antelope.cpp" />
     <ClCompile Include="Fox.cpp" />
+    <ClCompile Include="Human.cpp" />
     <ClCompile Include="Names.cpp" />
     <ClCompile Include="Output.cpp" />
     <ClCompile Include="Sheep.cpp" />

@@ -5,9 +5,9 @@
 
 Antelope::Antelope(World& fromWorld, coordinates_t position) : Animal(fromWorld, position)
 {
-	this->SetType('A');
-	this->SetStrength(4);
-	this->SetInitiative(4);
+	this->type = 'A';
+	this->strength = 4;
+	this->initiative = 4;
 }
 
 Antelope* Antelope::Clone(World& fromWorld, coordinates_t position)
@@ -17,18 +17,18 @@ Antelope* Antelope::Clone(World& fromWorld, coordinates_t position)
 
 void Antelope::Action()
 {
-	Move(RandomizeField());
-	Move(RandomizeField());
+	this->Move(this->RandomizeField());
+	this->Move(this->RandomizeField());
 }
 
 bool Antelope::TryResistAttack(Organism* attacker)
 {
 	Animal* that = dynamic_cast<Animal*>(attacker);
-	for each (auto newPosition in RandomizeFields())
+	for each (auto newPosition in this->RandomizeFields())
 	{
 		if (!this->GetWorld().isFieldOccupied(newPosition))
 		{
-			Move(newPosition);
+			this->Move(newPosition);
 			Output::log << this->Introduce() << " got away from " << that->Introduce() << std::endl;
 			return true;
 		}

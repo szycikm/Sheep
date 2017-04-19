@@ -8,11 +8,11 @@ class World;
 class Organism
 {
 private:
-	char type;
 	int age;
-	int strength, initiative;
 	World& fromWorld;
 protected:
+	char type;
+	int strength, initiative;
 	coordinates_t position;
 	std::vector<coordinates_t> RandomizeFields();
 public:
@@ -27,8 +27,5 @@ public:
 	int GetStrength() const;
 	int GetInitiative() const;
 	World& GetWorld() const;
-	void SetType(int type);
-	void SetStrength(int initiative);
-	void SetInitiative(int strength);
 	virtual void IncrementAge();
 };
