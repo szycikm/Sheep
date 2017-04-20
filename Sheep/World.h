@@ -9,6 +9,7 @@ class World
 private:
 	std::vector<Organism*> organisms;
 	coordinates_t maxxy;
+	static bool SortOrganisms(const Organism* first, const Organism* second);
 public:
 	World(size_t maxx, size_t maxy);
 	coordinates_t GetMaxXY() const;

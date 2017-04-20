@@ -5,7 +5,7 @@
 #include "Animal.h"
 #include "Human.h"
 
-bool SortOrganisms(const Organism* first, const Organism* second)
+bool World::SortOrganisms(const Organism* first, const Organism* second)
 {
 	if (first->GetInitiative() == second->GetInitiative())
 		return first->GetAge() > second->GetAge();

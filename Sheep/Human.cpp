@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include "Human.h"
+#include "World.h"
 #include "Output.h"
 
 Human::Human(World& fromWorld, coordinates_t position) : Animal(fromWorld, position)
@@ -36,20 +37,32 @@ void Human::Action()
 		switch (c)
 		{
 		case KEY_UP:
-			Move(coordinates_t{ this->position.x, this->position.y - 1 });
-			return;
+			if (this->position.y - 1 >= 0)
+			{
+				Move(coordinates_t{ this->position.x, this->position.y - 1 });
+				return;
+			}
 			break;
 		case KEY_DOWN:
-			Move(coordinates_t{ this->position.x, this->position.y + 1 });
-			return;
+			if (this->position.y + 1 < this->GetWorld().GetMaxXY().y)
+			{
+				Move(coordinates_t{ this->position.x, this->position.y + 1 });
+				return;
+			}
 			break;
 		case KEY_RIGHT:
-			Move(coordinates_t{ this->position.x + 1, this->position.y });
-			return;
+			if (this->position.x + 1 < this->GetWorld().GetMaxXY().x)
+			{
+				Move(coordinates_t{ this->position.x + 1, this->position.y });
+				return;
+			}
 			break;
 		case KEY_LEFT:
-			Move(coordinates_t{ this->position.x - 1, this->position.y });
-			return;
+			if (this->position.x - 1 >= 0)
+			{
+				Move(coordinates_t{ this->position.x - 1, this->position.y });
+				return;
+			}
 			break;
 		case KEY_SPECIAL:
 			if (this->specialCountdown <= 0)
