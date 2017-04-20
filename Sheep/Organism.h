@@ -18,7 +18,7 @@ protected:
 public:
 	Organism(World& fromWorld, coordinates_t position);
 	virtual Organism* Clone(World& fromWorld, coordinates_t position) = 0;
-	virtual bool TryResistAttack(Organism* attacker) = 0;
+	virtual bool TryResistAttack(Organism* attacker);
 	virtual void Action() = 0;
 	coordinates_t GetXY() const;
 	char Draw() const;

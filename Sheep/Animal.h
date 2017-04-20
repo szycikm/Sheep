@@ -12,7 +12,6 @@ protected:
 public:
 	Animal(World& fromWorld, coordinates_t position);
 	virtual void Action() override;
-	bool TryResistAttack(Organism* attacker) override;
 	const char* GetName() const;
 	void IncrementAge() override;
 	std::string Introduce() const;

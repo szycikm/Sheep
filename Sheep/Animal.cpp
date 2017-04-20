@@ -37,19 +37,20 @@ bool Animal::Collision(Organism* other)
 	{
 		// stronger (or attacker) wins and takes looser's field
 		Animal* that = dynamic_cast<Animal*>(other);
-		std::string otherName = that->GetName();
-		if (that->GetName() != "") otherName = " " + otherName;
+		std::string otherName = "";
+		if (dynamic_cast<Animal*>(other) != nullptr)
+			otherName = " " + std::string(that->GetName());
 		
-		if (this->GetStrength() >= that->GetStrength())
+		if (this->GetStrength() >= other->GetStrength())
 		{
-			if (that->TryResistAttack(this))
+			if (other->TryResistAttack(this))
 			{
-				Output::log << that->Introduce() << " resisted " << this->Introduce() << "'s attack!" << std::endl;
+				Output::log << Names::GetSpeciesName(other->GetType()) << otherName << " resisted " << this->Introduce() << "'s attack!" << std::endl;
 				return false; // other organism reflected the attack -> don't move
 			}
 			else
 			{
-				Output::log << "Yeah! " << this->Introduce() << " ate " << Names::GetSpeciesName(that->GetType()) << otherName << "!" << std::endl;
+				Output::log << "Yeah! " << this->Introduce() << " ate " << Names::GetSpeciesName(other->GetType()) << otherName << "!" << std::endl;
 				other->GetWorld().RemoveOrganism(other);
 				return true;
 			}
@@ -88,11 +89,6 @@ Animal::Animal(World& fromWorld, coordinates_t position) : Organism(fromWorld, p
 void Animal::Action()
 {
 	this->Move(this->RandomizeField());
-}
-
-bool Animal::TryResistAttack(Organism* attacker)
-{
-	return false; // normal animals can't resist attack
 }
 
 const char* Animal::GetName() const

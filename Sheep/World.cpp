@@ -50,6 +50,7 @@ void World::DoTurn()
 			this->organisms[i]->IncrementAge();
 	}
 
+	// clean dead organisms
 	for (size_t i = 0; i < this->GetOrganismCount(); i++)
 	{
 		if (this->organisms[i] == nullptr)

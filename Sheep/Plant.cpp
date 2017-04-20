@@ -1,11 +1,18 @@
 #include "Plant.h"
-
-void Plant::Collision(Organism & other)
-{
-	// TODO collision ahead
-}
+#include "World.h"
 
 void Plant::Action()
 {
-	// TODO action action action
+	// 1/4 chance to do anything
+	if (rand() % 4 > 2)
+	{
+		for each (coordinates_t pos in RandomizeFields())
+		{
+			if (!this->GetWorld().isFieldOccupied(pos))
+			{
+				this->GetWorld().AddOrganism(this->Clone(this->GetWorld(), pos));
+				return; // end turn after successful sew
+			}
+		}
+	}
 }

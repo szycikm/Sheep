@@ -5,6 +5,5 @@ class Plant : public Organism
 {
 public:
 	using Organism::Organism;
-	void Collision(Organism &other);
-	void Action() override;
+	virtual void Action() override;
 };

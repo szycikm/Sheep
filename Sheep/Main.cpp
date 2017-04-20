@@ -16,10 +16,12 @@
 #include "Turtle.h"
 #include "Antelope.h"
 #include "Human.h"
+#include "Grass.h"
+#include "Dairy.h"
 
 #define WORLD_X 15
 #define WORLD_Y 10
-#define SPECIES_START_MAX 10
+#define SPECIES_START_MAX 8
 
 int main()
 {
@@ -38,6 +40,11 @@ int main()
 	speciesNames['T'] = "Turtle";
 	speciesNames['A'] = "Antelope";
 	speciesNames['H'] = "Human";
+	speciesNames['G'] = "Grass";
+	speciesNames['D'] = "Dairy";
+	speciesNames['U'] = "Guarana";
+	speciesNames['B'] = "Wolf Berries";
+	speciesNames['C'] = "Sosnowski's Borsch";
 	std::vector<char*> randomNames = {
 		"Jake", "Winston", "Harry", "Larry", "Lenny", "Johnny", "Spencer", "Fred", "Joey", "Steve", "Bob",
 		"Mascara", "Mooriela", "Vicky", "Christina", "Vicky", "Daisy", "Elizabeth", "Dolores", "Esmeralda", "Matilda", "Jenny"
@@ -52,14 +59,18 @@ int main()
 	int foxcnt = rand() % SPECIES_START_MAX;
 	int turtlecnt = rand() % SPECIES_START_MAX;
 	int antelopecnt = rand() % SPECIES_START_MAX;
+	int grasscnt = rand() % SPECIES_START_MAX;
+	int dairycnt = rand() % SPECIES_START_MAX;
 
 	WinstonTheWolf wolf(world, coordinates_t{ 0, 0 });
 	Sheep sheep(world, coordinates_t{ 0, 0 });
 	Fox fox(world, coordinates_t{ 0, 0 });
 	Turtle turtle(world, coordinates_t{ 0, 0 });
 	Antelope antelope(world, coordinates_t{ 0, 0 });
-	Human human(world, coordinates_t{ rand() % WORLD_X, rand() % WORLD_Y }); // HUMAN AFTER ALL. (actually add him before all)
+	Human human(world, coordinates_t{ rand() % WORLD_X, rand() % WORLD_Y }); // HUMAN AFTER ALL
 	world.AddOrganism(&human);
+	Grass grass(world, coordinates_t{ 0, 0 });
+	Dairy dairy(world, coordinates_t{ 0, 0 });
 
 	for (size_t i = 0; i < SPECIES_START_MAX; i++)
 	{
@@ -77,9 +88,13 @@ int main()
 
 		if (antelopecnt > i)
 			world.AddOrganism(antelope.Clone(world, coordinates_t{ rand() % WORLD_X, rand() % WORLD_Y }));
+
+		if (grasscnt > i)
+			world.AddOrganism(grass.Clone(world, coordinates_t{ rand() % WORLD_X, rand() % WORLD_Y }));
+
+		if (dairycnt > i)
+			world.AddOrganism(dairy.Clone(world, coordinates_t{ rand() % WORLD_X, rand() % WORLD_Y }));
 	}
-
-
 	
 	char c = '0';
 	while (c != KEY_QUIT)

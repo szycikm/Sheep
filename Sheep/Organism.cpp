@@ -26,6 +26,11 @@ Organism::Organism(World& fromWorld, coordinates_t position): fromWorld(fromWorl
 	this->age = 0;
 }
 
+bool Organism::TryResistAttack(Organism* attacker)
+{
+	return false; // standard organisms can't resist attack
+}
+
 char Organism::GetType() const
 {
 	return this->type;
