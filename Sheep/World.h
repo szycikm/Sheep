@@ -14,6 +14,7 @@ public:
 	World(size_t maxx, size_t maxy);
 	coordinates_t GetMaxXY() const;
 	Organism* isFieldOccupied(coordinates_t questioner);
+	Organism* GetOrganismByPosition(coordinates_t position);
 	void DoTurn();
 	bool AddOrganism(Organism *o);
 	void RemoveOrganism(Organism *o);

@@ -5,6 +5,11 @@
 #include "World.h"
 #include "Names.h"
 
+void Animal::Init()
+{
+	this->name = Names::GetRandomName();
+}
+
 // default animal collision logic. Returns: if animal should be moved or not
 bool Animal::Collision(Organism* other)
 {
@@ -62,11 +67,6 @@ bool Animal::Collision(Organism* other)
 	}
 }
 
-coordinates_t Animal::RandomizeField()
-{
-	return this->RandomizeFields()[0]; // just grab first random generated value
-}
-
 // detect collisions and move to the next position if necessary
 void Animal::Move(coordinates_t nextPosition)
 {
@@ -78,9 +78,19 @@ void Animal::Move(coordinates_t nextPosition)
 	}
 }
 
+coordinates_t Animal::RandomizeField()
+{
+	return this->RandomizeFields()[0]; // just grab first random generated value
+}
+
 Animal::Animal(World& fromWorld, coordinates_t position) : Organism(fromWorld, position)
 {
-	this->name = Names::GetRandomName();
+	this->Init();
+}
+
+Animal::Animal(World& fromWorld) : Organism(fromWorld)
+{
+	this->Init();
 }
 
 // default animal movement

@@ -37,6 +37,16 @@ Organism* World::isFieldOccupied(coordinates_t questioner)
 	return nullptr;
 }
 
+Organism* World::GetOrganismByPosition(coordinates_t position)
+{
+	for each (Organism* org in this->organisms)
+	{
+		if (org != nullptr && org->GetXY().x == position.x && org->GetXY().y == position.y)
+			return org;
+	}
+	return nullptr;
+}
+
 void World::DoTurn()
 {
 	std::sort(this->organisms.begin(), this->organisms.end(), SortOrganisms);

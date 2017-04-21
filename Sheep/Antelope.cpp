@@ -3,11 +3,21 @@
 #include "World.h"
 #include "Output.h"
 
-Antelope::Antelope(World& fromWorld, coordinates_t position) : Animal(fromWorld, position)
+void Antelope::Init()
 {
 	this->type = 'A';
 	this->strength = 4;
 	this->initiative = 4;
+}
+
+Antelope::Antelope(World& fromWorld, coordinates_t position) : Animal(fromWorld, position)
+{
+	this->Init();
+}
+
+Antelope::Antelope(World& fromWorld) : Animal(fromWorld)
+{
+	this->Init();
 }
 
 Antelope* Antelope::Clone(World& fromWorld, coordinates_t position)

@@ -8,9 +8,11 @@
 class Human : public Animal
 {
 private:
+	void Init();
 	int specialCountdown;
 public:
 	Human(World& fromWorld, coordinates_t position);
+	Human(World& fromWorld);
 	Human* Clone(World& fromWorld, coordinates_t position) override;
 	void Action() override;
 };

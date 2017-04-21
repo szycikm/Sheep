@@ -2,29 +2,32 @@
 #include <conio.h>
 #include <random>
 #include <string>
-#include <map>
 #include <vector>
 #include <time.h>
 #include <windows.h>
+
 #include "Output.h"
 #include "Names.h"
 #include "World.h"
 #include "Organism.h"
+
 #include "WinstonTheWolf.h"
 #include "Sheep.h"
 #include "Fox.h"
 #include "Turtle.h"
 #include "Antelope.h"
 #include "Human.h"
+
 #include "Grass.h"
 #include "Dairy.h"
 #include "Guarana.h"
 #include "WolfBerries.h"
+#include "SosnowskisBorsch.h"
 
+#define ANIMAL_START_MAX 5
+#define PLANT_START_MAX 2
 #define WORLD_X 15
 #define WORLD_Y 10
-#define ANIMAL_START_MAX 8
-#define PLANT_START_MAX 3
 
 int main()
 {
@@ -59,35 +62,37 @@ int main()
 	World world(WORLD_X, WORLD_Y);
 	auto turns = 0;
 
-	world.AddOrganism(new Human(world, coordinates_t{ rand() % WORLD_X, rand() % WORLD_Y })); // HUMAN AFTER ALL (actually add him first)
-
-
-	for (size_t i = 0; i < rand() % ANIMAL_START_MAX; i++)
-		world.AddOrganism(new WinstonTheWolf(world, coordinates_t{ rand() % WORLD_X, rand() % WORLD_Y }));
+	world.AddOrganism(new Human(world)); // HUMAN AFTER ALL (actually add him first)
 
 	for (size_t i = 0; i < rand() % ANIMAL_START_MAX; i++)
-		world.AddOrganism(new Sheep(world, coordinates_t{ rand() % WORLD_X, rand() % WORLD_Y }));
+		world.AddOrganism(new WinstonTheWolf(world));
 
 	for (size_t i = 0; i < rand() % ANIMAL_START_MAX; i++)
-		world.AddOrganism(new Fox(world, coordinates_t{ rand() % WORLD_X, rand() % WORLD_Y }));
+		world.AddOrganism(new Sheep(world));
 
 	for (size_t i = 0; i < rand() % ANIMAL_START_MAX; i++)
-		world.AddOrganism(new Turtle(world, coordinates_t{ rand() % WORLD_X, rand() % WORLD_Y }));
+		world.AddOrganism(new Fox(world));
 
 	for (size_t i = 0; i < rand() % ANIMAL_START_MAX; i++)
-		world.AddOrganism(new Antelope(world, coordinates_t{ rand() % WORLD_X, rand() % WORLD_Y }));
+		world.AddOrganism(new Turtle(world));
+
+	for (size_t i = 0; i < rand() % ANIMAL_START_MAX; i++)
+		world.AddOrganism(new Antelope(world));
 
 	for (size_t i = 0; i < rand() % PLANT_START_MAX; i++)
-		world.AddOrganism(new Grass(world, coordinates_t{ rand() % WORLD_X, rand() % WORLD_Y }));
+		world.AddOrganism(new Grass(world));
 
 	for (size_t i = 0; i < rand() % PLANT_START_MAX; i++)
-		world.AddOrganism(new Dairy(world, coordinates_t{ rand() % WORLD_X, rand() % WORLD_Y }));
+		world.AddOrganism(new Dairy(world));
 
 	for (size_t i = 0; i < rand() % PLANT_START_MAX; i++)
-		world.AddOrganism(new Guarana(world, coordinates_t{ rand() % WORLD_X, rand() % WORLD_Y }));
+		world.AddOrganism(new Guarana(world));
 
 	for (size_t i = 0; i < rand() % PLANT_START_MAX; i++)
-		world.AddOrganism(new WolfBerries(world, coordinates_t{ rand() % WORLD_X, rand() % WORLD_Y }));
+		world.AddOrganism(new WolfBerries(world));
+
+	for (size_t i = 0; i < rand() % PLANT_START_MAX; i++)
+		world.AddOrganism(new SosnowskisBorsch(world));
 	
 	char c = '0';
 	while (c != KEY_QUIT)

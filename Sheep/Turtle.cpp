@@ -1,12 +1,22 @@
+#include <string>
 #include "Turtle.h"
 #include "Output.h"
-#include "Names.h"
 
-Turtle::Turtle(World& fromWorld, coordinates_t position) : Animal(fromWorld, position)
+void Turtle::Init()
 {
 	this->type = 'T';
 	this->strength = 2;
 	this->initiative = 1;
+}
+
+Turtle::Turtle(World& fromWorld, coordinates_t position) : Animal(fromWorld, position)
+{
+	this->Init();
+}
+
+Turtle::Turtle(World& fromWorld) : Animal(fromWorld)
+{
+	this->Init();
 }
 
 Turtle* Turtle::Clone(World& fromWorld, coordinates_t position)
@@ -25,5 +35,5 @@ void Turtle::Action()
 	if (rand() % 4 <= 0)
 		Animal::Action();
 	else
-		Output::log << Names::GetSpeciesName(this->type) << " " << this->name << " decided not to move" << std::endl;
+		Output::log << this->Introduce() << " decided not to move" << std::endl;
 }

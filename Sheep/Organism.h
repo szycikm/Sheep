@@ -10,6 +10,7 @@ class Organism
 private:
 	int age;
 	World& fromWorld;
+	void Init(coordinates_t position);
 protected:
 	char type;
 	int strength, initiative;
@@ -17,6 +18,7 @@ protected:
 	std::vector<coordinates_t> RandomizeFields();
 public:
 	Organism(World& fromWorld, coordinates_t position);
+	Organism(World& fromWorld);
 	virtual Organism* Clone(World& fromWorld, coordinates_t position) = 0;
 	virtual bool TryResistAttack(Organism* attacker);
 	virtual void Action() = 0;

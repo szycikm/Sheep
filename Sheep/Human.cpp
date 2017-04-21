@@ -5,12 +5,22 @@
 #include "World.h"
 #include "Output.h"
 
-Human::Human(World& fromWorld, coordinates_t position) : Animal(fromWorld, position)
+void Human::Init()
 {
 	this->type = 'H';
 	this->strength = 5;
 	this->initiative = 4;
 	this->specialCountdown = 0;
+}
+
+Human::Human(World& fromWorld, coordinates_t position) : Animal(fromWorld, position)
+{
+	this->Init();
+}
+
+Human::Human(World& fromWorld) : Animal(fromWorld)
+{
+	this->Init();
 }
 
 Human* Human::Clone(World& fromWorld, coordinates_t position)

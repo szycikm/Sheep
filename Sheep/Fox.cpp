@@ -1,13 +1,23 @@
+#include <string>
 #include "Fox.h"
-#include "Names.h"
 #include "World.h"
 #include "Output.h"
 
-Fox::Fox(World& fromWorld, coordinates_t position) : Animal(fromWorld, position)
+void Fox::Init()
 {
 	this->type = 'F';
 	this->strength = 3;
 	this->initiative = 7;
+}
+
+Fox::Fox(World& fromWorld, coordinates_t position) : Animal(fromWorld, position)
+{
+	this->Init();
+}
+
+Fox::Fox(World& fromWorld) : Animal(fromWorld)
+{
+	this->Init();
 }
 
 Fox* Fox::Clone(World& fromWorld, coordinates_t position)
@@ -29,5 +39,5 @@ void Fox::Action()
 		}
 	}
 
-	Output::log << Names::GetSpeciesName(this->type) << " " << this->name<< " decided to stay in place" << std::endl;
+	Output::log << this->Introduce() << " decided to stay in place" << std::endl;
 }

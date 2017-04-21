@@ -2,6 +2,13 @@
 #include "Organism.h"
 #include "World.h"
 #include "Names.h"
+#include "Output.h"
+
+void Organism::Init(coordinates_t position)
+{
+	this->position = position;
+	this->age = 0;
+}
 
 // randomizes 2 to 4 new coordinates respecting the world limits
 std::vector<coordinates_t> Organism::RandomizeFields()
@@ -21,9 +28,14 @@ std::vector<coordinates_t> Organism::RandomizeFields()
 	return randomized;
 }
 
-Organism::Organism(World& fromWorld, coordinates_t position): fromWorld(fromWorld), position(position)
+Organism::Organism(World& fromWorld, coordinates_t position) : fromWorld(fromWorld)
 {
-	this->age = 0;
+	this->Init(position);
+}
+
+Organism::Organism(World& fromWorld) : fromWorld(fromWorld)
+{
+	this->Init(coordinates_t{ rand() % fromWorld.GetMaxXY().x, rand() % fromWorld.GetMaxXY().y });
 }
 
 bool Organism::TryResistAttack(Organism* attacker)

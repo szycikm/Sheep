@@ -81,6 +81,9 @@
     <ClInclude Include="WolfBerries.h">
       <Filter>Header Files\Plants</Filter>
     </ClInclude>
+    <ClInclude Include="SosnowskisBorsch.h">
+      <Filter>Header Files\Plants</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animal.cpp">
@@ -132,6 +135,9 @@
       <Filter>Source Files\Plants</Filter>
     </ClCompile>
     <ClCompile Include="WolfBerries.cpp">
+      <Filter>Source Files\Plants</Filter>
+    </ClCompile>
+    <ClCompile Include="SosnowskisBorsch.cpp">
       <Filter>Source Files\Plants</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1,13 +1,22 @@
 #include <string>
 #include "Guarana.h"
 #include "Output.h"
-#include "Animal.h"
 
-Guarana::Guarana(World& fromWorld, coordinates_t position) : Plant(fromWorld, position)
+void Guarana::Init()
 {
 	this->type = 'U';
 	this->strength = 0;
 	this->initiative = 0;
+}
+
+Guarana::Guarana(World& fromWorld, coordinates_t position) : Plant(fromWorld, position)
+{
+	this->Init();
+}
+
+Guarana::Guarana(World& fromWorld) : Plant(fromWorld)
+{
+	this->Init();
 }
 
 Guarana* Guarana::Clone(World& fromWorld, coordinates_t position)
