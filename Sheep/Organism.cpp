@@ -71,3 +71,8 @@ void Organism::IncrementAge()
 {
 	this->age++;
 }
+
+void Organism::SetStrength(int strength)
+{
+	this->strength = strength;
+}

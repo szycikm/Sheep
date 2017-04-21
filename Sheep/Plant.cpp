@@ -1,5 +1,6 @@
 #include "Plant.h"
 #include "World.h"
+#include "Names.h"
 
 void Plant::Action()
 {
@@ -15,4 +16,9 @@ void Plant::Action()
 			}
 		}
 	}
+}
+
+std::string Plant::Introduce() const
+{
+	return std::string(Names::GetSpeciesName(this->type));
 }

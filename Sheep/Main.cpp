@@ -18,10 +18,12 @@
 #include "Human.h"
 #include "Grass.h"
 #include "Dairy.h"
+#include "Guarana.h"
 
 #define WORLD_X 15
 #define WORLD_Y 10
-#define SPECIES_START_MAX 8
+#define ANIMAL_START_MAX 8
+#define PLANT_START_MAX 3
 
 int main()
 {
@@ -33,6 +35,7 @@ int main()
 	// start logger window
 	system("start ..\\Debug\\SheepLogger");
 
+	// set global names
 	std::map<char, char*> speciesNames;
 	speciesNames['W'] = "Wolf";
 	speciesNames['S'] = "Sheep";
@@ -51,50 +54,36 @@ int main()
 	};
 	Names names(speciesNames, randomNames);
 
+	// init world
 	World world(WORLD_X, WORLD_Y);
 	auto turns = 0;
 
-	int wolfcnt = rand() % SPECIES_START_MAX;
-	int sheepcnt = rand() % SPECIES_START_MAX;
-	int foxcnt = rand() % SPECIES_START_MAX;
-	int turtlecnt = rand() % SPECIES_START_MAX;
-	int antelopecnt = rand() % SPECIES_START_MAX;
-	int grasscnt = rand() % SPECIES_START_MAX;
-	int dairycnt = rand() % SPECIES_START_MAX;
+	world.AddOrganism(new Human(world, coordinates_t{ rand() % WORLD_X, rand() % WORLD_Y })); // HUMAN AFTER ALL (actually add him first)
 
-	WinstonTheWolf wolf(world, coordinates_t{ 0, 0 });
-	Sheep sheep(world, coordinates_t{ 0, 0 });
-	Fox fox(world, coordinates_t{ 0, 0 });
-	Turtle turtle(world, coordinates_t{ 0, 0 });
-	Antelope antelope(world, coordinates_t{ 0, 0 });
-	Human human(world, coordinates_t{ rand() % WORLD_X, rand() % WORLD_Y }); // HUMAN AFTER ALL
-	world.AddOrganism(&human);
-	Grass grass(world, coordinates_t{ 0, 0 });
-	Dairy dairy(world, coordinates_t{ 0, 0 });
 
-	for (size_t i = 0; i < SPECIES_START_MAX; i++)
-	{
-		if (wolfcnt > i)
-			world.AddOrganism(wolf.Clone(world, coordinates_t{ rand() % WORLD_X, rand() % WORLD_Y }));
+	for (size_t i = 0; i < rand() % ANIMAL_START_MAX; i++)
+		world.AddOrganism(new WinstonTheWolf(world, coordinates_t{ rand() % WORLD_X, rand() % WORLD_Y }));
 
-		if (sheepcnt > i)
-			world.AddOrganism(sheep.Clone(world, coordinates_t{ rand() % WORLD_X, rand() % WORLD_Y }));
+	for (size_t i = 0; i < rand() % ANIMAL_START_MAX; i++)
+		world.AddOrganism(new Sheep(world, coordinates_t{ rand() % WORLD_X, rand() % WORLD_Y }));
 
-		if (foxcnt > i)
-			world.AddOrganism(fox.Clone(world, coordinates_t{ rand() % WORLD_X, rand() % WORLD_Y }));
+	for (size_t i = 0; i < rand() % ANIMAL_START_MAX; i++)
+		world.AddOrganism(new Fox(world, coordinates_t{ rand() % WORLD_X, rand() % WORLD_Y }));
 
-		if (turtlecnt > i)
-			world.AddOrganism(turtle.Clone(world, coordinates_t{ rand() % WORLD_X, rand() % WORLD_Y }));
+	for (size_t i = 0; i < rand() % ANIMAL_START_MAX; i++)
+		world.AddOrganism(new Turtle(world, coordinates_t{ rand() % WORLD_X, rand() % WORLD_Y }));
 
-		if (antelopecnt > i)
-			world.AddOrganism(antelope.Clone(world, coordinates_t{ rand() % WORLD_X, rand() % WORLD_Y }));
+	for (size_t i = 0; i < rand() % ANIMAL_START_MAX; i++)
+		world.AddOrganism(new Antelope(world, coordinates_t{ rand() % WORLD_X, rand() % WORLD_Y }));
 
-		if (grasscnt > i)
-			world.AddOrganism(grass.Clone(world, coordinates_t{ rand() % WORLD_X, rand() % WORLD_Y }));
+	for (size_t i = 0; i < rand() % PLANT_START_MAX; i++)
+		world.AddOrganism(new Grass(world, coordinates_t{ rand() % WORLD_X, rand() % WORLD_Y }));
 
-		if (dairycnt > i)
-			world.AddOrganism(dairy.Clone(world, coordinates_t{ rand() % WORLD_X, rand() % WORLD_Y }));
-	}
+	for (size_t i = 0; i < rand() % PLANT_START_MAX; i++)
+		world.AddOrganism(new Dairy(world, coordinates_t{ rand() % WORLD_X, rand() % WORLD_Y }));
+
+	for (size_t i = 0; i < rand() % PLANT_START_MAX; i++)
+		world.AddOrganism(new Guarana(world, coordinates_t{ rand() % WORLD_X, rand() % WORLD_Y }));
 	
 	char c = '0';
 	while (c != KEY_QUIT)

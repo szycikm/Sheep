@@ -28,4 +28,6 @@ public:
 	int GetInitiative() const;
 	World& GetWorld() const;
 	virtual void IncrementAge();
+	void SetStrength(int strength);
+	virtual std::string Introduce() const = 0;
 };

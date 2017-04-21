@@ -6,4 +6,5 @@ class Plant : public Organism
 public:
 	using Organism::Organism;
 	virtual void Action() override;
+	std::string Introduce() const override;
 };

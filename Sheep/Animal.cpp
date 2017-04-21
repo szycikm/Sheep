@@ -15,49 +15,42 @@ bool Animal::Collision(Organism* other)
 	else if (this->GetType() == other->GetType())
 	{
 		// animal of the same type stands on this field -> just have sex and don't move there
-
-		Animal* that = dynamic_cast<Animal*>(other);
-
+		
 		// check all four directions in random order
 		for each (coordinates_t coords in RandomizeFields())
 		{
 			Animal* child = dynamic_cast<Animal*>(this->Clone(this->GetWorld(), coords));
 			if (this->GetWorld().AddOrganism(child))
 			{
-				Output::log << "D'awww. " << this->Introduce() << " and " << that->Introduce() << " are having a baby! And it's name is " << child->GetName() << std::endl;
+				Output::log << "D'awww. " << this->Introduce() << " and " << other->Introduce() << " are having a baby! And it's name is " << child->GetName() << std::endl;
 				return false;
 			}
 		}
 
 		// no place for new animal
-		Output::log << this->Introduce() << " and " << that->Introduce() << " wanted to have a baby, but the world decided otherwise" << std::endl;
+		Output::log << this->Introduce() << " and " << other->Introduce() << " wanted to have a baby, but the world decided otherwise" << std::endl;
 		return false;
 	}
 	else
 	{
 		// stronger (or attacker) wins and takes looser's field
-		Animal* that = dynamic_cast<Animal*>(other);
-		std::string otherName = "";
-		if (dynamic_cast<Animal*>(other) != nullptr)
-			otherName = " " + std::string(that->GetName());
-		
 		if (this->GetStrength() >= other->GetStrength())
 		{
 			if (other->TryResistAttack(this))
 			{
-				Output::log << Names::GetSpeciesName(other->GetType()) << otherName << " resisted " << this->Introduce() << "'s attack!" << std::endl;
+				Output::log << other->Introduce() << " resisted " << this->Introduce() << "'s attack!" << std::endl;
 				return false; // other organism reflected the attack -> don't move
 			}
 			else
 			{
-				Output::log << "Yeah! " << this->Introduce() << " ate " << Names::GetSpeciesName(other->GetType()) << otherName << "!" << std::endl;
+				Output::log << "Yeah! " << this->Introduce() << " ate " << other->Introduce() << "!" << std::endl;
 				other->GetWorld().RemoveOrganism(other);
 				return true;
 			}
 		}
 		else
 		{
-			Output::log << "Oh no! " << Names::GetSpeciesName(other->GetType()) << otherName << " ate " << this->Introduce() << "!" << std::endl;
+			Output::log << "Oh no! " << other->Introduce() << " ate " << this->Introduce() << "!" << std::endl;
 			this->GetWorld().RemoveOrganism(this);
 			return false;
 		}

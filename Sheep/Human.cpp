@@ -26,7 +26,7 @@ void Human::Action()
 	{
 		this->specialCountdown--;
 		this->strength--;
-		Output::log << this->Introduce() << "'s strength is dropping! " << this->specialCountdown << " turns till normal" << this->strength << std::endl;
+		Output::log << this->Introduce() << "'s strength is dropping! " << this->specialCountdown << " turns till normal" << std::endl;
 	}
 
 	std::cout << "Waiting for human input...";

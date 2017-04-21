@@ -23,16 +23,15 @@ void Antelope::Action()
 
 bool Antelope::TryResistAttack(Organism* attacker)
 {
-	Animal* that = dynamic_cast<Animal*>(attacker);
 	for each (auto newPosition in this->RandomizeFields())
 	{
 		if (!this->GetWorld().isFieldOccupied(newPosition))
 		{
 			this->Move(newPosition);
-			Output::log << this->Introduce() << " got away from " << that->Introduce() << std::endl;
+			Output::log << this->Introduce() << " got away from " << attacker->Introduce() << std::endl;
 			return true;
 		}
 	}
-	Output::log << this->Introduce() << " tried to get away, but you can't hide from " << that->Introduce() << std::endl;
+	Output::log << this->Introduce() << " tried to get away, but you can't hide from " << attacker->Introduce() << std::endl;
 	return false;
 }

@@ -14,5 +14,5 @@ public:
 	virtual void Action() override;
 	const char* GetName() const;
 	void IncrementAge() override;
-	std::string Introduce() const;
+	std::string Introduce() const override;
 };
