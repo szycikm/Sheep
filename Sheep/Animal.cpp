@@ -1,5 +1,6 @@
 #include <string>
 #include "Animal.h"
+#include "Plant.h"
 #include "Output.h"
 #include "World.h"
 #include "Names.h"
@@ -50,7 +51,11 @@ bool Animal::Collision(Organism* other)
 		}
 		else
 		{
-			Output::log << "Oh no! " << other->Introduce() << " ate " << this->Introduce() << "!" << std::endl;
+			if(dynamic_cast<Plant*>(other) != nullptr)
+				Output::log << "Oh no! " << this->Introduce() << " ate " << other->Introduce() << " and died!" << std::endl; // other organism is plant
+			else
+				Output::log << "Oh no! " << other->Introduce() << " ate " << this->Introduce() << "!" << std::endl; // other organism is animal
+
 			this->GetWorld().RemoveOrganism(this);
 			return false;
 		}

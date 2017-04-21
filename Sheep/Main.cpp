@@ -19,6 +19,7 @@
 #include "Grass.h"
 #include "Dairy.h"
 #include "Guarana.h"
+#include "WolfBerries.h"
 
 #define WORLD_X 15
 #define WORLD_Y 10
@@ -84,6 +85,9 @@ int main()
 
 	for (size_t i = 0; i < rand() % PLANT_START_MAX; i++)
 		world.AddOrganism(new Guarana(world, coordinates_t{ rand() % WORLD_X, rand() % WORLD_Y }));
+
+	for (size_t i = 0; i < rand() % PLANT_START_MAX; i++)
+		world.AddOrganism(new WolfBerries(world, coordinates_t{ rand() % WORLD_X, rand() % WORLD_Y }));
 	
 	char c = '0';
 	while (c != KEY_QUIT)
