@@ -35,4 +35,5 @@ public:
 	virtual std::string Introduce() const = 0;
 	bool isAlive() const;
 	void Die();
+	virtual std::string toString();
 };

@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <string>
 #include "Organism.h"
 #include "World.h"
 #include "Names.h"
@@ -94,4 +95,9 @@ bool Organism::isAlive() const
 void Organism::Die()
 {
 	this->alive = false; // mark organism as dead
+}
+
+std::string Organism::toString()
+{
+	return this->type + ";" + std::to_string(this->age) + ";" + std::to_string(this->alive) + ";" + std::to_string(this->strength) + ";" + std::to_string(this->initiative) + ";" + std::to_string(this->position.x) + ";" + std::to_string(this->position.y);
 }

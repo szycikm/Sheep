@@ -91,3 +91,8 @@ void Human::Action()
 		}
 	}
 }
+
+std::string Human::toString()
+{
+	return Animal::toString() + ";" + std::to_string(this->specialCountdown);
+}

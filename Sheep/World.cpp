@@ -1,5 +1,6 @@
 #include <iostream>
 #include <algorithm>
+#include <string>
 #include "World.h"
 #include "Output.h"
 #include "Animal.h"
@@ -93,6 +94,16 @@ void World::PrintWorld() const
 	}
 }
 
+std::string World::toString()
+{
+	std::string everything = std::to_string(this->maxxy.x) + "\n" + std::to_string(this->maxxy.y) + "\n";
+	for (size_t i = 0; i < this->GetOrganismCount(); i++)
+	{
+		everything += this->organisms[i]->toString() + "\n";
+	}
+	return everything;
+}
+
 World::~World()
 {
 	// unset every pointer to delete objects
@@ -101,4 +112,5 @@ World::~World()
 		this->organisms[i] = nullptr;
 	}
 	this->organisms.clear();
+	Output::log << "destruktor œwiatów" << std::endl;
 }

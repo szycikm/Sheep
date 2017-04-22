@@ -96,8 +96,8 @@ int main()
 	for (int i = 0; i < rand() % PLANT_START_MAX; i++)
 		world.AddOrganism(std::make_shared<SosnowskisBorsch>(SosnowskisBorsch(world)));
 	
-	char c = '0';
-	while (c != KEY_QUIT)
+	char c;
+	while (true)
 	{
 		system("CLS");
 
@@ -111,18 +111,31 @@ int main()
 		world.PrintWorld();
 
 		c = _getch();
-		switch (c)
+		if (c == KEY_SAVE)
 		{
-		case KEY_SAVE:
-			// TODO save state
-			break;
-		case KEY_LOAD:
+			std::ofstream save;
+			save.open("..\\save.dat");
+			save << turns << std::endl << world.toString();
+			save.close();
+			Output::log << "Saved world state";
+		}
+		else if (c == KEY_LOAD)
+		{
 			// TODO load state
+			//std::ifstream save("..\\save.dat");
+
+			//save.close();
+			//Output::GoToXY(20, CONSOLE_HEIGHT);
+			//std::cout << "Loaded world state";
+		}
+		else if (c == KEY_QUIT)
+		{
 			break;
-		default:
+		}
+		else
+		{
 			world.DoTurn();
 			turns++;
-			break;
 		}
 	}
 

@@ -19,5 +19,6 @@ public:
 	bool AddOrganism(std::shared_ptr<Organism>);
 	size_t GetOrganismCount() const;
 	void PrintWorld() const;
+	std::string toString();
 	~World();
 };

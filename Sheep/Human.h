@@ -15,4 +15,5 @@ public:
 	Human(World& fromWorld);
 	std::shared_ptr<Organism> Clone(World& fromWorld, coordinates_t position) override;
 	void Action() override;
+	std::string toString() override;
 };

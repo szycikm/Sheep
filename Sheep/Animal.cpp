@@ -115,3 +115,8 @@ std::string Animal::Introduce() const
 {
 	return std::string(Names::GetSpeciesName(this->type)) + " " + this->name;
 }
+
+std::string Animal::toString()
+{
+	return Organism::toString() + ";" + this->name;
+}

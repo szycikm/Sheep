@@ -18,4 +18,5 @@ public:
 	const char* GetName() const;
 	void IncrementAge() override;
 	std::string Introduce() const override;
+	virtual std::string toString() override;
 };
