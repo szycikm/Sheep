@@ -13,6 +13,6 @@ private:
 public:
 	Human(World& fromWorld, coordinates_t position);
 	Human(World& fromWorld);
-	Human* Clone(World& fromWorld, coordinates_t position) override;
+	std::shared_ptr<Organism> Clone(World& fromWorld, coordinates_t position) override;
 	void Action() override;
 };

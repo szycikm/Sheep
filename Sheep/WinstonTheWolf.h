@@ -8,5 +8,5 @@ private:
 public:
 	WinstonTheWolf(World& fromWorld, coordinates_t position);
 	WinstonTheWolf(World& fromWorld);
-	WinstonTheWolf* Clone(World& fromWorld, coordinates_t position) override;
+	std::shared_ptr<Organism> Clone(World& fromWorld, coordinates_t position) override;
 };

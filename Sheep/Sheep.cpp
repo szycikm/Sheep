@@ -17,7 +17,7 @@ Sheep::Sheep(World& fromWorld) : Animal(fromWorld)
 	this->Init();
 }
 
-Sheep* Sheep::Clone(World& fromWorld, coordinates_t position)
+std::shared_ptr<Organism> Sheep::Clone(World& fromWorld, coordinates_t position)
 {
-	return new Sheep(fromWorld, position);
+	return std::make_shared<Sheep>(Sheep(fromWorld, position));
 }

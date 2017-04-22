@@ -5,7 +5,7 @@
 #include "Animal.h"
 #include "Human.h"
 
-bool World::SortOrganisms(const Organism* first, const Organism* second)
+bool World::SortOrganisms(const std::shared_ptr<Organism> first, const std::shared_ptr<Organism> second)
 {
 	if (first->GetInitiative() == second->GetInitiative())
 		return first->GetAge() > second->GetAge();
@@ -24,9 +24,9 @@ coordinates_t World::GetMaxXY() const
 	return this->maxxy;
 }
 
-Organism* World::isFieldOccupied(coordinates_t questioner)
+std::shared_ptr<Organism> World::isFieldOccupied(coordinates_t questioner)
 {
-	for each (Organism* org in this->organisms)
+	for each (auto org in this->organisms)
 	{
 		if (org != nullptr)
 		{
@@ -37,9 +37,9 @@ Organism* World::isFieldOccupied(coordinates_t questioner)
 	return nullptr;
 }
 
-Organism* World::GetOrganismByPosition(coordinates_t position)
+std::shared_ptr<Organism> World::GetOrganismByPosition(coordinates_t position)
 {
-	for each (Organism* org in this->organisms)
+	for each (auto org in this->organisms)
 	{
 		if (org != nullptr && org->GetXY().x == position.x && org->GetXY().y == position.y)
 			return org;
@@ -71,7 +71,7 @@ void World::DoTurn()
 	}
 }
 
-bool World::AddOrganism(Organism *o)
+bool World::AddOrganism(std::shared_ptr<Organism> o)
 {
 	if (o->GetXY().x >= this->maxxy.x || o->GetXY().y >= this->maxxy.y || o->GetXY().x < 0 || o->GetXY().y < 0)
 	{
@@ -90,7 +90,7 @@ bool World::AddOrganism(Organism *o)
 	}
 }
 
-void World::RemoveOrganism(Organism* o)
+void World::RemoveOrganism(std::shared_ptr<Organism> o)
 {
 	auto it = std::find(this->organisms.begin(), this->organisms.end(), o);
 	if (it != this->organisms.end())
@@ -105,7 +105,7 @@ size_t World::GetOrganismCount() const
 
 void World::PrintWorld() const
 {
-	for each (Organism* org in this->organisms)
+	for each (auto org in this->organisms)
 	{
 		Output::GoToXY(org->GetXY().x, org->GetXY().y);
 		std::cout << org->Draw();

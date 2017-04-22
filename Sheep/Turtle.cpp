@@ -19,12 +19,12 @@ Turtle::Turtle(World& fromWorld) : Animal(fromWorld)
 	this->Init();
 }
 
-Turtle* Turtle::Clone(World& fromWorld, coordinates_t position)
+std::shared_ptr<Organism> Turtle::Clone(World& fromWorld, coordinates_t position)
 {
-	return new Turtle(fromWorld, position);
+	return std::make_shared<Turtle>(Turtle(fromWorld, position));
 }
 
-bool Turtle::TryResistAttack(Organism* attacker)
+bool Turtle::TryResistAttack(std::shared_ptr<Organism> attacker)
 {
 	return attacker->GetStrength() < TURTLE_RESIST_STRENGTH;
 }

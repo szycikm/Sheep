@@ -9,5 +9,5 @@ private:
 public:
 	Grass(World& fromWorld, coordinates_t position);
 	Grass(World& fromWorld);
-	Grass* Clone(World& fromWorld, coordinates_t position) override;
+	std::shared_ptr<Organism> Clone(World& fromWorld, coordinates_t position) override;
 };

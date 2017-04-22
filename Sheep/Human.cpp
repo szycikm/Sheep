@@ -23,9 +23,9 @@ Human::Human(World& fromWorld) : Animal(fromWorld)
 	this->Init();
 }
 
-Human* Human::Clone(World& fromWorld, coordinates_t position)
+std::shared_ptr<Organism> Human::Clone(World& fromWorld, coordinates_t position)
 {
-	return new Human(fromWorld, position);
+	return std::make_shared<Human>(Human(fromWorld, position));
 }
 
 void Human::Action()

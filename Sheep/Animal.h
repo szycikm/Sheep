@@ -1,12 +1,13 @@
 #pragma once
+#include <memory>
 #include "Organism.h"
 
-class Animal : public Organism
+class Animal : public Organism, public std::enable_shared_from_this<Animal>
 {
 private:
 	const char* name;
 	void Init();
-	virtual bool Collision(Organism* other);
+	virtual bool Collision(std::shared_ptr<Organism> other);
 protected:
 	void Move(coordinates_t nextPosition);
 	coordinates_t RandomizeField();

@@ -11,7 +11,7 @@ void Animal::Init()
 }
 
 // default animal collision logic. Returns: if animal should be moved or not
-bool Animal::Collision(Organism* other)
+bool Animal::Collision(std::shared_ptr<Organism> other)
 {
 	if (other == nullptr)
 	{
@@ -25,8 +25,8 @@ bool Animal::Collision(Organism* other)
 		// check all four directions in random order
 		for each (coordinates_t coords in RandomizeFields())
 		{
-			Animal* child = dynamic_cast<Animal*>(this->Clone(this->GetWorld(), coords));
-			if (this->GetWorld().AddOrganism(child))
+			auto child = std::dynamic_pointer_cast<Animal>(this->Clone(this->GetWorld(), coords));
+			if (child != nullptr && this->GetWorld().AddOrganism(child))
 			{
 				Output::log << "D'awww. " << this->Introduce() << " and " << other->Introduce() << " are having a baby! And it's name is " << child->GetName() << std::endl;
 				return false;
@@ -42,7 +42,7 @@ bool Animal::Collision(Organism* other)
 		// stronger (or attacker) wins and takes looser's field
 		if (this->GetStrength() >= other->GetStrength())
 		{
-			if (other->TryResistAttack(this))
+			if (other->TryResistAttack(shared_from_this()))
 			{
 				Output::log << other->Introduce() << " resisted " << this->Introduce() << "'s attack!" << std::endl;
 				return false; // other organism reflected the attack -> don't move
@@ -56,12 +56,12 @@ bool Animal::Collision(Organism* other)
 		}
 		else
 		{
-			if(dynamic_cast<Plant*>(other) != nullptr)
+			if(std::dynamic_pointer_cast<Plant>(other) != nullptr)
 				Output::log << "Oh no! " << this->Introduce() << " ate " << other->Introduce() << " and died!" << std::endl; // other organism is plant
 			else
 				Output::log << "Oh no! " << other->Introduce() << " ate " << this->Introduce() << "!" << std::endl; // other organism is animal
 
-			this->GetWorld().RemoveOrganism(this);
+			this->GetWorld().RemoveOrganism(shared_from_this());
 			return false;
 		}
 	}

@@ -20,18 +20,18 @@ SosnowskisBorsch::SosnowskisBorsch(World& fromWorld) : Plant(fromWorld)
 	this->Init();
 }
 
-SosnowskisBorsch* SosnowskisBorsch::Clone(World & fromWorld, coordinates_t position)
+std::shared_ptr<Organism> SosnowskisBorsch::Clone(World& fromWorld, coordinates_t position)
 {
-	return new SosnowskisBorsch(fromWorld, position);
+	return std::make_shared<SosnowskisBorsch>(SosnowskisBorsch(fromWorld, position));
 }
 
 void SosnowskisBorsch::Action()
 {
 	for each (coordinates_t target in this->RandomizeFields())
 	{
-		Organism* victim = this->GetWorld().GetOrganismByPosition(target);
+		auto victim = this->GetWorld().GetOrganismByPosition(target);
 		// only kill animals that get too close
-		if (victim != nullptr && dynamic_cast<Animal*>(victim) != nullptr)
+		if (victim != nullptr && std::dynamic_pointer_cast<Animal>(victim) != nullptr)
 		{
 			Output::log << victim->Introduce() << " got too close to " << this->Introduce() << std::endl;
 			this->GetWorld().RemoveOrganism(victim);

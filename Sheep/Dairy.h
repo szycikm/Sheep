@@ -9,6 +9,6 @@ private:
 public:
 	Dairy(World& fromWorld, coordinates_t position);
 	Dairy(World& fromWorld);
-	Dairy* Clone(World& fromWorld, coordinates_t position) override;
+	std::shared_ptr<Organism> Clone(World& fromWorld, coordinates_t position) override;
 	void Action() override;
 };

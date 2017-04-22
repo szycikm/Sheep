@@ -1,4 +1,5 @@
 #pragma once
+#include <memory>
 #include "Organism.h"
 
 class Plant : public Organism

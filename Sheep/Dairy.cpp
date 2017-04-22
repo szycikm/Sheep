@@ -17,9 +17,9 @@ Dairy::Dairy(World& fromWorld) : Plant(fromWorld)
 	this->Init();
 }
 
-Dairy* Dairy::Clone(World & fromWorld, coordinates_t position)
+std::shared_ptr<Organism> Dairy::Clone(World& fromWorld, coordinates_t position)
 {
-	return new Dairy(fromWorld, position);
+	return std::make_shared<Dairy>(Dairy(fromWorld, position));
 }
 
 void Dairy::Action()

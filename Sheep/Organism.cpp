@@ -38,7 +38,7 @@ Organism::Organism(World& fromWorld) : fromWorld(fromWorld)
 	this->Init(coordinates_t{ rand() % fromWorld.GetMaxXY().x, rand() % fromWorld.GetMaxXY().y });
 }
 
-bool Organism::TryResistAttack(Organism* attacker)
+bool Organism::TryResistAttack(std::shared_ptr<Organism> attacker)
 {
 	return false; // standard organisms can't resist attack
 }

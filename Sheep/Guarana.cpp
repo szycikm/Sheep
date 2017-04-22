@@ -19,12 +19,12 @@ Guarana::Guarana(World& fromWorld) : Plant(fromWorld)
 	this->Init();
 }
 
-Guarana* Guarana::Clone(World& fromWorld, coordinates_t position)
+std::shared_ptr<Organism> Guarana::Clone(World& fromWorld, coordinates_t position)
 {
-	return new Guarana(fromWorld, position);
+	return std::make_shared<Guarana>(Guarana(fromWorld, position));
 }
 
-bool Guarana::TryResistAttack(Organism* attacker)
+bool Guarana::TryResistAttack(std::shared_ptr<Organism> attacker)
 {
 	attacker->SetStrength(attacker->GetStrength() + 3);
 	Output::log << attacker->Introduce() << " ate " << this->Introduce() << " and is feeling stronger" << std::endl;

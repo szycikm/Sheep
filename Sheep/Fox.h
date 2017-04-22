@@ -8,6 +8,6 @@ private:
 public:
 	Fox(World& fromWorld, coordinates_t position);
 	Fox(World& fromWorld);
-	Fox* Clone(World& fromWorld, coordinates_t position) override;
+	std::shared_ptr<Organism> Clone(World& fromWorld, coordinates_t position) override;
 	void Action() override;
 };

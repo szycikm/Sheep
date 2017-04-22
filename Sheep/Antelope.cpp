@@ -20,9 +20,9 @@ Antelope::Antelope(World& fromWorld) : Animal(fromWorld)
 	this->Init();
 }
 
-Antelope* Antelope::Clone(World& fromWorld, coordinates_t position)
+std::shared_ptr<Organism> Antelope::Clone(World& fromWorld, coordinates_t position)
 {
-	return new Antelope(fromWorld, position);
+	return std::make_shared<Antelope>(Antelope(fromWorld, position));
 }
 
 void Antelope::Action()
@@ -31,7 +31,7 @@ void Antelope::Action()
 	this->Move(this->RandomizeField());
 }
 
-bool Antelope::TryResistAttack(Organism* attacker)
+bool Antelope::TryResistAttack(std::shared_ptr<Organism> attacker)
 {
 	for each (auto newPosition in this->RandomizeFields())
 	{

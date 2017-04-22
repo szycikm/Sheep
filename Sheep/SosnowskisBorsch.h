@@ -10,6 +10,6 @@ private:
 public:
 	SosnowskisBorsch(World& fromWorld, coordinates_t position);
 	SosnowskisBorsch(World& fromWorld);
-	SosnowskisBorsch* Clone(World& fromWorld, coordinates_t position) override;
+	std::shared_ptr<Organism> Clone(World& fromWorld, coordinates_t position) override;
 	void Action() override;
 };

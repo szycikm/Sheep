@@ -17,7 +17,7 @@ Grass::Grass(World& fromWorld) : Plant(fromWorld)
 	this->Init();
 }
 
-Grass* Grass::Clone(World& fromWorld, coordinates_t position)
+std::shared_ptr<Organism> Grass::Clone(World& fromWorld, coordinates_t position)
 {
-	return new Grass(fromWorld, position);
+	return std::make_shared<Grass>(Grass(fromWorld, position));
 }

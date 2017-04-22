@@ -17,7 +17,7 @@ WolfBerries::WolfBerries(World& fromWorld) : Plant(fromWorld)
 	this->Init();
 }
 
-WolfBerries* WolfBerries::Clone(World& fromWorld, coordinates_t position)
+std::shared_ptr<Organism> WolfBerries::Clone(World& fromWorld, coordinates_t position)
 {
-	return new WolfBerries(fromWorld, position);
+	return std::make_shared<WolfBerries>(WolfBerries(fromWorld, position));
 }

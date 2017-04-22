@@ -17,7 +17,7 @@ WinstonTheWolf::WinstonTheWolf(World& fromWorld) : Animal(fromWorld)
 	this->Init();
 }
 
-WinstonTheWolf* WinstonTheWolf::Clone(World& fromWorld, coordinates_t position)
+std::shared_ptr<Organism> WinstonTheWolf::Clone(World& fromWorld, coordinates_t position)
 {
-	return new WinstonTheWolf(fromWorld, position);
+	return std::make_shared<WinstonTheWolf>(WinstonTheWolf(fromWorld, position));
 }

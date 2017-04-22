@@ -62,37 +62,37 @@ int main()
 	World world(WORLD_X, WORLD_Y);
 	auto turns = 0;
 
-	world.AddOrganism(new Human(world)); // HUMAN AFTER ALL (actually add him first)
+	world.AddOrganism(std::make_shared<Human>(Human(world))); // HUMAN AFTER ALL (actually add him first)
 
-	for (size_t i = 0; i < rand() % ANIMAL_START_MAX; i++)
-		world.AddOrganism(new WinstonTheWolf(world));
+	for (int i = 0; i < rand() % ANIMAL_START_MAX; i++)
+		world.AddOrganism(std::make_shared<WinstonTheWolf>(WinstonTheWolf(world)));
 
-	for (size_t i = 0; i < rand() % ANIMAL_START_MAX; i++)
-		world.AddOrganism(new Sheep(world));
+	for (int i = 0; i < rand() % ANIMAL_START_MAX; i++)
+		world.AddOrganism(std::make_shared<Sheep>(Sheep(world)));
 
-	for (size_t i = 0; i < rand() % ANIMAL_START_MAX; i++)
-		world.AddOrganism(new Fox(world));
+	for (int i = 0; i < rand() % ANIMAL_START_MAX; i++)
+		world.AddOrganism(std::make_shared<Fox>(Fox(world)));
 
-	for (size_t i = 0; i < rand() % ANIMAL_START_MAX; i++)
-		world.AddOrganism(new Turtle(world));
+	for (int i = 0; i < rand() % ANIMAL_START_MAX; i++)
+		world.AddOrganism(std::make_shared<Turtle>(Turtle(world)));
 
-	for (size_t i = 0; i < rand() % ANIMAL_START_MAX; i++)
-		world.AddOrganism(new Antelope(world));
+	for (int i = 0; i < rand() % ANIMAL_START_MAX; i++)
+		world.AddOrganism(std::make_shared<Antelope>(Antelope(world)));
 
-	for (size_t i = 0; i < rand() % PLANT_START_MAX; i++)
-		world.AddOrganism(new Grass(world));
+	for (int i = 0; i < rand() % PLANT_START_MAX; i++)
+		world.AddOrganism(std::make_shared<Grass>(Grass(world)));
 
-	for (size_t i = 0; i < rand() % PLANT_START_MAX; i++)
-		world.AddOrganism(new Dairy(world));
+	for (int i = 0; i < rand() % PLANT_START_MAX; i++)
+		world.AddOrganism(std::make_shared<Dairy>(Dairy(world)));
 
-	for (size_t i = 0; i < rand() % PLANT_START_MAX; i++)
-		world.AddOrganism(new Guarana(world));
+	for (int i = 0; i < rand() % PLANT_START_MAX; i++)
+		world.AddOrganism(std::make_shared<Guarana>(Guarana(world)));
 
-	for (size_t i = 0; i < rand() % PLANT_START_MAX; i++)
-		world.AddOrganism(new WolfBerries(world));
+	for (int i = 0; i < rand() % PLANT_START_MAX; i++)
+		world.AddOrganism(std::make_shared<WolfBerries>(WolfBerries(world)));
 
-	for (size_t i = 0; i < rand() % PLANT_START_MAX; i++)
-		world.AddOrganism(new SosnowskisBorsch(world));
+	for (int i = 0; i < rand() % PLANT_START_MAX; i++)
+		world.AddOrganism(std::make_shared<SosnowskisBorsch>(SosnowskisBorsch(world)));
 	
 	char c = '0';
 	while (c != KEY_QUIT)

@@ -20,9 +20,9 @@ Fox::Fox(World& fromWorld) : Animal(fromWorld)
 	this->Init();
 }
 
-Fox* Fox::Clone(World& fromWorld, coordinates_t position)
+std::shared_ptr<Organism> Fox::Clone(World& fromWorld, coordinates_t position)
 {
-	return new Fox(fromWorld, position);
+	return std::make_shared<Fox>(Fox(fromWorld, position));
 }
 
 void Fox::Action()
