@@ -27,15 +27,18 @@ std::shared_ptr<Organism> Antelope::Clone(World& fromWorld, coordinates_t positi
 
 void Antelope::Action()
 {
-	this->Move(this->RandomizeField());
-	this->Move(this->RandomizeField());
+	for (size_t i = 0; i < 2; i++)
+	{
+		if(this->isAlive())
+			this->Move(this->RandomizeField());
+	}
 }
 
 bool Antelope::TryResistAttack(std::shared_ptr<Organism> attacker)
 {
 	for each (auto newPosition in this->RandomizeFields())
 	{
-		if (!this->GetWorld().isFieldOccupied(newPosition))
+		if (!this->fromWorld.GetOrganismByPosition(newPosition))
 		{
 			this->Move(newPosition);
 			Output::log << this->Introduce() << " got away from " << attacker->Introduce() << std::endl;

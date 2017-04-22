@@ -2,7 +2,7 @@
 #include <memory>
 #include "Organism.h"
 
-class Animal : public Organism, public std::enable_shared_from_this<Animal>
+class Animal : public Organism
 {
 private:
 	const char* name;

@@ -29,12 +29,12 @@ void SosnowskisBorsch::Action()
 {
 	for each (coordinates_t target in this->RandomizeFields())
 	{
-		auto victim = this->GetWorld().GetOrganismByPosition(target);
+		auto victim = this->fromWorld.GetOrganismByPosition(target);
 		// only kill animals that get too close
-		if (victim != nullptr && std::dynamic_pointer_cast<Animal>(victim) != nullptr)
+		if (victim && std::dynamic_pointer_cast<Animal>(victim) != nullptr)
 		{
 			Output::log << victim->Introduce() << " got too close to " << this->Introduce() << std::endl;
-			this->GetWorld().RemoveOrganism(victim);
+			victim->Die();
 		}
 	}
 	Plant::Action(); // after it kills everything, it tries to sew, like any normal plant

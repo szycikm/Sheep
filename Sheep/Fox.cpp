@@ -30,9 +30,9 @@ void Fox::Action()
 	// sneaky fox checks all directions and decides where to move (if at all)
 	for each (coordinates_t coords in RandomizeFields())
 	{
-		auto collider = this->GetWorld().isFieldOccupied(coords);
-		// move to empty field, or attack weaker organism
-		if (collider == nullptr || (collider != nullptr && collider->GetStrength() <= this->GetStrength()))
+		auto collider = this->fromWorld.GetOrganismByPosition(coords);
+		// move to empty field, or attack weaker organism. sneaky
+		if (!collider || (collider && collider->GetStrength() <= this->GetStrength()))
 		{
 			this->Move(coords);
 			return;

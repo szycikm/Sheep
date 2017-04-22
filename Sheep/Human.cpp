@@ -54,14 +54,14 @@ void Human::Action()
 			}
 			break;
 		case KEY_DOWN:
-			if (this->position.y + 1 < this->GetWorld().GetMaxXY().y)
+			if (this->position.y + 1 < this->fromWorld.GetMaxXY().y)
 			{
 				Move(coordinates_t{ this->position.x, this->position.y + 1 });
 				return;
 			}
 			break;
 		case KEY_RIGHT:
-			if (this->position.x + 1 < this->GetWorld().GetMaxXY().x)
+			if (this->position.x + 1 < this->fromWorld.GetMaxXY().x)
 			{
 				Move(coordinates_t{ this->position.x + 1, this->position.y });
 				return;

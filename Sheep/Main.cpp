@@ -62,6 +62,8 @@ int main()
 	World world(WORLD_X, WORLD_Y);
 	auto turns = 0;
 
+	// add random amount of every organism (and 1 human)
+
 	world.AddOrganism(std::make_shared<Human>(Human(world))); // HUMAN AFTER ALL (actually add him first)
 
 	for (int i = 0; i < rand() % ANIMAL_START_MAX; i++)

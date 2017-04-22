@@ -13,9 +13,9 @@ void Animal::Init()
 // default animal collision logic. Returns: if animal should be moved or not
 bool Animal::Collision(std::shared_ptr<Organism> other)
 {
-	if (other == nullptr)
+	if (!other)
 	{
-		// nothing stands on new field -> just move there
+		// nothing stands on new field or there's something dead -> just move there
 		return true;
 	}
 	else if (this->GetType() == other->GetType())
@@ -25,8 +25,8 @@ bool Animal::Collision(std::shared_ptr<Organism> other)
 		// check all four directions in random order
 		for each (coordinates_t coords in RandomizeFields())
 		{
-			auto child = std::dynamic_pointer_cast<Animal>(this->Clone(this->GetWorld(), coords));
-			if (child != nullptr && this->GetWorld().AddOrganism(child))
+			auto child = std::dynamic_pointer_cast<Animal>(this->Clone(this->fromWorld, coords));
+			if (child != nullptr && this->fromWorld.AddOrganism(child))
 			{
 				Output::log << "D'awww. " << this->Introduce() << " and " << other->Introduce() << " are having a baby! And it's name is " << child->GetName() << std::endl;
 				return false;
@@ -50,7 +50,7 @@ bool Animal::Collision(std::shared_ptr<Organism> other)
 			else
 			{
 				Output::log << "Yeah! " << this->Introduce() << " ate " << other->Introduce() << "!" << std::endl;
-				other->GetWorld().RemoveOrganism(other);
+				other->Die();
 				return true;
 			}
 		}
@@ -61,7 +61,7 @@ bool Animal::Collision(std::shared_ptr<Organism> other)
 			else
 				Output::log << "Oh no! " << other->Introduce() << " ate " << this->Introduce() << "!" << std::endl; // other organism is animal
 
-			this->GetWorld().RemoveOrganism(shared_from_this());
+			this->Die();
 			return false;
 		}
 	}
@@ -70,7 +70,7 @@ bool Animal::Collision(std::shared_ptr<Organism> other)
 // detect collisions and move to the next position if necessary
 void Animal::Move(coordinates_t nextPosition)
 {
-	auto collider = this->GetWorld().isFieldOccupied(nextPosition);
+	auto collider = this->fromWorld.GetOrganismByPosition(nextPosition);
 	if (Collision(collider))
 	{
 		position = nextPosition;

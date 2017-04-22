@@ -8,6 +8,7 @@ void Organism::Init(coordinates_t position)
 {
 	this->position = position;
 	this->age = 0;
+	this->alive = true;
 }
 
 // randomizes 2 to 4 new coordinates respecting the world limits
@@ -74,11 +75,6 @@ int Organism::GetInitiative() const
 	return this->initiative;
 }
 
-World& Organism::GetWorld() const
-{
-	return this->fromWorld;
-}
-
 void Organism::IncrementAge()
 {
 	this->age++;
@@ -87,4 +83,15 @@ void Organism::IncrementAge()
 void Organism::SetStrength(int strength)
 {
 	this->strength = strength;
+}
+
+bool Organism::isAlive() const
+{
+	return this->alive;
+}
+
+// fly, fly, PIZZA DIE!
+void Organism::Die()
+{
+	this->alive = false; // mark organism as dead
 }

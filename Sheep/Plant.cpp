@@ -9,9 +9,9 @@ void Plant::Action()
 	{
 		for each (coordinates_t pos in RandomizeFields())
 		{
-			if (!this->GetWorld().isFieldOccupied(pos))
+			if (!this->fromWorld.GetOrganismByPosition(pos))
 			{
-				this->GetWorld().AddOrganism(this->Clone(this->GetWorld(), pos));
+				this->fromWorld.AddOrganism(this->Clone(this->fromWorld, pos));
 				return; // end turn after successful sew
 			}
 		}

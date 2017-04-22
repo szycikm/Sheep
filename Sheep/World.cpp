@@ -7,6 +7,7 @@
 
 bool World::SortOrganisms(const std::shared_ptr<Organism> first, const std::shared_ptr<Organism> second)
 {
+	if (!first || !second) return false; // if either organism is nullptr we should exit
 	if (first->GetInitiative() == second->GetInitiative())
 		return first->GetAge() > second->GetAge();
 	else
@@ -24,25 +25,12 @@ coordinates_t World::GetMaxXY() const
 	return this->maxxy;
 }
 
-std::shared_ptr<Organism> World::isFieldOccupied(coordinates_t questioner)
-{
-	for each (auto org in this->organisms)
-	{
-		if (org != nullptr)
-		{
-			if (org->GetXY().x == questioner.x && org->GetXY().y == questioner.y)
-				return org;
-		}
-	}
-	return nullptr;
-}
-
 std::shared_ptr<Organism> World::GetOrganismByPosition(coordinates_t position)
 {
-	for each (auto org in this->organisms)
+	for (size_t i = 0; i < this->GetOrganismCount(); i++)
 	{
-		if (org != nullptr && org->GetXY().x == position.x && org->GetXY().y == position.y)
-			return org;
+		if (this->organisms[i]->isAlive() && this->organisms[i]->GetXY().x == position.x && this->organisms[i]->GetXY().y == position.y)
+			return this->organisms[i];
 	}
 	return nullptr;
 }
@@ -53,19 +41,20 @@ void World::DoTurn()
 	size_t cnt = this->GetOrganismCount(); // organism count can get bigger so it's important to keep it in separate variable
 	for (size_t i = 0; i < cnt; i++)
 	{
-		if (this->organisms[i] != nullptr)
+		if (this->organisms[i]->isAlive())
 			this->organisms[i]->Action();
 
-		if (this->organisms[i] != nullptr) // again, because this organism might have just stepped into stronger animal
+		if (this->organisms[i]->isAlive()) // again, because this organism might have just stepped into stronger animal
 			this->organisms[i]->IncrementAge();
 	}
 
 	// clean dead organisms
 	for (size_t i = 0; i < this->GetOrganismCount(); i++)
 	{
-		if (this->organisms[i] == nullptr)
+		if (!this->organisms[i]->isAlive())
 		{
-			this->organisms.erase(this->organisms.begin() + i);
+			this->organisms[i] = nullptr; // set ptr to null (it might delete object that's no longer needed)
+			this->organisms.erase(this->organisms.begin() + i); // also erase pointer from vector
 			i--; // because we just deleted i element
 		}
 	}
@@ -78,7 +67,7 @@ bool World::AddOrganism(std::shared_ptr<Organism> o)
 		//Output::log << "Organism coordinates outside of this world" << std::endl;
 		return false;
 	}
-	else if (this->isFieldOccupied(o->GetXY()))
+	else if (this->GetOrganismByPosition(o->GetXY()))
 	{
 		//Output::log << "Field already occupied" << std::endl;
 		return false;
@@ -90,14 +79,6 @@ bool World::AddOrganism(std::shared_ptr<Organism> o)
 	}
 }
 
-void World::RemoveOrganism(std::shared_ptr<Organism> o)
-{
-	auto it = std::find(this->organisms.begin(), this->organisms.end(), o);
-	if (it != this->organisms.end())
-		this->organisms.at(it - this->organisms.begin()) = nullptr;
-		//organisms.erase(it); // crashes loop
-}
-
 size_t World::GetOrganismCount() const
 {
 	return this->organisms.size();
@@ -105,14 +86,19 @@ size_t World::GetOrganismCount() const
 
 void World::PrintWorld() const
 {
-	for each (auto org in this->organisms)
+	for (size_t i = 0; i < this->GetOrganismCount(); i++)
 	{
-		Output::GoToXY(org->GetXY().x, org->GetXY().y);
-		std::cout << org->Draw();
+		Output::GoToXY(this->organisms[i]->GetXY().x, this->organisms[i]->GetXY().y);
+		std::cout << this->organisms[i]->Draw();
 	}
 }
 
 World::~World()
 {
+	// unset every pointer to delete objects
+	for (size_t i = 0; i < this->GetOrganismCount(); i++)
+	{
+		this->organisms[i] = nullptr;
+	}
 	this->organisms.clear();
 }

@@ -6,14 +6,15 @@
 #define ADULT_AGE 5
 
 class World;
-class Organism
+class Organism : public std::enable_shared_from_this<Organism>
 {
 private:
 	int age;
-	World& fromWorld;
 	void Init(coordinates_t position);
+	bool alive;
 protected:
 	char type;
+	World& fromWorld;
 	int strength, initiative;
 	coordinates_t position;
 	std::vector<coordinates_t> RandomizeFields();
@@ -29,8 +30,9 @@ public:
 	int GetAge() const;
 	int GetStrength() const;
 	int GetInitiative() const;
-	World& GetWorld() const;
 	virtual void IncrementAge();
 	void SetStrength(int strength);
 	virtual std::string Introduce() const = 0;
+	bool isAlive() const;
+	void Die();
 };
