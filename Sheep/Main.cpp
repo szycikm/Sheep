@@ -11,7 +11,7 @@
 #include "World.h"
 #include "Organism.h"
 
-#include "WinstonTheWolf.h"
+#include "Wolf.h"
 #include "Sheep.h"
 #include "Fox.h"
 #include "Turtle.h"
@@ -65,7 +65,7 @@ int main()
 	world.AddOrganism(std::make_shared<Human>(Human(world))); // HUMAN AFTER ALL (actually add him first)
 
 	for (int i = 0; i < rand() % ANIMAL_START_MAX; i++)
-		world.AddOrganism(std::make_shared<WinstonTheWolf>(WinstonTheWolf(world)));
+		world.AddOrganism(std::make_shared<Wolf>(Wolf(world)));
 
 	for (int i = 0; i < rand() % ANIMAL_START_MAX; i++)
 		world.AddOrganism(std::make_shared<Sheep>(Sheep(world)));
