@@ -10,7 +10,16 @@ void Antelope::Init()
 	this->initiative = 4;
 }
 
-Antelope::Antelope(World& fromWorld, coordinates_t position) : Animal(fromWorld, position)
+Antelope::Antelope(World& fromWorld, int x, int y, int age, int strength, int initiative, std::string name) : Animal(fromWorld, x, y)
+{
+	this->type = 'A';
+	this->strength = strength;
+	this->initiative = initiative;
+	this->name = name;
+	this->age = age;
+}
+
+Antelope::Antelope(World& fromWorld, int x, int y) : Animal(fromWorld, x, y)
 {
 	this->Init();
 }
@@ -22,7 +31,7 @@ Antelope::Antelope(World& fromWorld) : Animal(fromWorld)
 
 std::shared_ptr<Organism> Antelope::Clone(World& fromWorld, coordinates_t position)
 {
-	return std::make_shared<Antelope>(Antelope(fromWorld, position));
+	return std::make_shared<Antelope>(Antelope(fromWorld, position.x, position.y));
 }
 
 void Antelope::Action()
@@ -47,4 +56,9 @@ bool Antelope::TryResistAttack(std::shared_ptr<Organism> attacker)
 	}
 	Output::log << this->Introduce() << " tried to get away, but you can't hide from " << attacker->Introduce() << std::endl;
 	return false;
+}
+
+std::string Antelope::toString()
+{
+	return Animal::toString() + ";";
 }

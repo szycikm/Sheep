@@ -14,7 +14,7 @@ int main()
 
 		file.clear();
 
-		Sleep(50);
+		Sleep(100);
 	}
 	file.close();
     return 0;

@@ -13,7 +13,17 @@ void Human::Init()
 	this->specialCountdown = 0;
 }
 
-Human::Human(World& fromWorld, coordinates_t position) : Animal(fromWorld, position)
+Human::Human(World& fromWorld, int x, int y, int age, int strength, int initiative, std::string name, int specialCountdown) : Animal(fromWorld, x, y)
+{
+	this->type = 'H';
+	this->strength = strength;
+	this->initiative = initiative;
+	this->name = name;
+	this->age = age;
+	this->specialCountdown = specialCountdown;
+}
+
+Human::Human(World& fromWorld, int x, int y) : Animal(fromWorld, x, y)
 {
 	this->Init();
 }
@@ -25,7 +35,7 @@ Human::Human(World& fromWorld) : Animal(fromWorld)
 
 std::shared_ptr<Organism> Human::Clone(World& fromWorld, coordinates_t position)
 {
-	return std::make_shared<Human>(Human(fromWorld, position));
+	return std::make_shared<Human>(Human(fromWorld, position.x, position.y));
 }
 
 void Human::Action()

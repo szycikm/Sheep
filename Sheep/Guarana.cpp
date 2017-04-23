@@ -9,7 +9,15 @@ void Guarana::Init()
 	this->initiative = 0;
 }
 
-Guarana::Guarana(World& fromWorld, coordinates_t position) : Plant(fromWorld, position)
+Guarana::Guarana(World & fromWorld, int x, int y, int age, int strength, int initiative) : Plant(fromWorld, x, y)
+{
+	this->type = 'U';
+	this->strength = strength;
+	this->initiative = initiative;
+	this->age = age;
+}
+
+Guarana::Guarana(World& fromWorld, int x, int y) : Plant(fromWorld, x, y)
 {
 	this->Init();
 }
@@ -21,7 +29,7 @@ Guarana::Guarana(World& fromWorld) : Plant(fromWorld)
 
 std::shared_ptr<Organism> Guarana::Clone(World& fromWorld, coordinates_t position)
 {
-	return std::make_shared<Guarana>(Guarana(fromWorld, position));
+	return std::make_shared<Guarana>(Guarana(fromWorld, position.x, position.y));
 }
 
 bool Guarana::TryResistAttack(std::shared_ptr<Organism> attacker)

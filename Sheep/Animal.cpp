@@ -83,7 +83,7 @@ coordinates_t Animal::RandomizeField()
 	return this->RandomizeFields()[0]; // just grab first random generated value
 }
 
-Animal::Animal(World& fromWorld, coordinates_t position) : Organism(fromWorld, position)
+Animal::Animal(World& fromWorld, int x, int y) : Organism(fromWorld, x, y)
 {
 	this->Init();
 }
@@ -99,7 +99,7 @@ void Animal::Action()
 	this->Move(this->RandomizeField());
 }
 
-const char* Animal::GetName() const
+std::string Animal::GetName() const
 {
 	return this->name;
 }

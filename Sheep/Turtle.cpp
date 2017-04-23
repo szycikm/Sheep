@@ -9,7 +9,16 @@ void Turtle::Init()
 	this->initiative = 1;
 }
 
-Turtle::Turtle(World& fromWorld, coordinates_t position) : Animal(fromWorld, position)
+Turtle::Turtle(World & fromWorld, int x, int y, int age, int strength, int initiative, std::string name) : Animal(fromWorld, x, y)
+{
+	this->type = 'T';
+	this->strength = strength;
+	this->initiative = initiative;
+	this->name = name;
+	this->age = age;
+}
+
+Turtle::Turtle(World& fromWorld, int x, int y) : Animal(fromWorld, x, y)
 {
 	this->Init();
 }
@@ -21,7 +30,7 @@ Turtle::Turtle(World& fromWorld) : Animal(fromWorld)
 
 std::shared_ptr<Organism> Turtle::Clone(World& fromWorld, coordinates_t position)
 {
-	return std::make_shared<Turtle>(Turtle(fromWorld, position));
+	return std::make_shared<Turtle>(Turtle(fromWorld, position.x, position.y));
 }
 
 bool Turtle::TryResistAttack(std::shared_ptr<Organism> attacker)
@@ -36,4 +45,9 @@ void Turtle::Action()
 		Animal::Action();
 	else
 		Output::log << this->Introduce() << " decided not to move" << std::endl;
+}
+
+std::string Turtle::toString()
+{
+	return Animal::toString() + ";";
 }

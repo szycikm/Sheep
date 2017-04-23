@@ -112,5 +112,4 @@ World::~World()
 		this->organisms[i] = nullptr;
 	}
 	this->organisms.clear();
-	Output::log << "destruktor œwiatów" << std::endl;
 }

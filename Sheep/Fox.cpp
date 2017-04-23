@@ -10,7 +10,16 @@ void Fox::Init()
 	this->initiative = 7;
 }
 
-Fox::Fox(World& fromWorld, coordinates_t position) : Animal(fromWorld, position)
+Fox::Fox(World& fromWorld, int x, int y, int age, int strength, int initiative, std::string name) : Animal(fromWorld, x, y)
+{
+	this->type = 'F';
+	this->strength = strength;
+	this->initiative = initiative;
+	this->name = name;
+	this->age = age;
+}
+
+Fox::Fox(World& fromWorld, int x, int y) : Animal(fromWorld, x, y)
 {
 	this->Init();
 }
@@ -22,7 +31,7 @@ Fox::Fox(World& fromWorld) : Animal(fromWorld)
 
 std::shared_ptr<Organism> Fox::Clone(World& fromWorld, coordinates_t position)
 {
-	return std::make_shared<Fox>(Fox(fromWorld, position));
+	return std::make_shared<Fox>(Fox(fromWorld, position.x, position.y));
 }
 
 void Fox::Action()
@@ -40,4 +49,9 @@ void Fox::Action()
 	}
 
 	Output::log << this->Introduce() << " decided to stay in place" << std::endl;
+}
+
+std::string Fox::toString()
+{
+	return Animal::toString() + ";";
 }

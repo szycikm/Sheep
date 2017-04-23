@@ -7,7 +7,15 @@ void Grass::Init()
 	this->initiative = 0;
 }
 
-Grass::Grass(World& fromWorld, coordinates_t position) : Plant(fromWorld, position)
+Grass::Grass(World & fromWorld, int x, int y, int age, int strength, int initiative) : Plant(fromWorld, x, y)
+{
+	this->type = 'G';
+	this->strength = strength;
+	this->initiative = initiative;
+	this->age = age;
+}
+
+Grass::Grass(World& fromWorld, int x, int y) : Plant(fromWorld, x, y)
 {
 	this->Init();
 }
@@ -19,5 +27,5 @@ Grass::Grass(World& fromWorld) : Plant(fromWorld)
 
 std::shared_ptr<Organism> Grass::Clone(World& fromWorld, coordinates_t position)
 {
-	return std::make_shared<Grass>(Grass(fromWorld, position));
+	return std::make_shared<Grass>(Grass(fromWorld, position.x, position.y));
 }

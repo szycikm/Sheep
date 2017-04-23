@@ -22,3 +22,8 @@ std::string Plant::Introduce() const
 {
 	return std::string(Names::GetSpeciesName(this->type));
 }
+
+std::string Plant::toString()
+{
+	return Organism::toString() + ";;";
+}

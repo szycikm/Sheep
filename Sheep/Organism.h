@@ -9,17 +9,17 @@ class World;
 class Organism : public std::enable_shared_from_this<Organism>
 {
 private:
-	int age;
-	void Init(coordinates_t position);
+	void Init(int x, int y);
 	bool alive;
 protected:
 	char type;
+	int age;
 	World& fromWorld;
 	int strength, initiative;
 	coordinates_t position;
 	std::vector<coordinates_t> RandomizeFields();
 public:
-	Organism(World& fromWorld, coordinates_t position);
+	Organism(World& fromWorld, int x, int y);
 	Organism(World& fromWorld);
 	virtual std::shared_ptr<Organism> Clone(World& fromWorld, coordinates_t position) = 0;
 	virtual bool TryResistAttack(std::shared_ptr<Organism> attacker);

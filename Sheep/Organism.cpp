@@ -5,9 +5,9 @@
 #include "Names.h"
 #include "Output.h"
 
-void Organism::Init(coordinates_t position)
+void Organism::Init(int x, int y)
 {
-	this->position = position;
+	this->position = coordinates_t{ x, y };
 	this->age = 0;
 	this->alive = true;
 }
@@ -30,14 +30,14 @@ std::vector<coordinates_t> Organism::RandomizeFields()
 	return randomized;
 }
 
-Organism::Organism(World& fromWorld, coordinates_t position) : fromWorld(fromWorld)
+Organism::Organism(World& fromWorld, int x, int y) : fromWorld(fromWorld)
 {
-	this->Init(position);
+	this->Init(x, y);
 }
 
 Organism::Organism(World& fromWorld) : fromWorld(fromWorld)
 {
-	this->Init(coordinates_t{ rand() % fromWorld.GetMaxXY().x, rand() % fromWorld.GetMaxXY().y });
+	this->Init(rand() % fromWorld.GetMaxXY().x, rand() % fromWorld.GetMaxXY().y);
 }
 
 bool Organism::TryResistAttack(std::shared_ptr<Organism> attacker)
@@ -99,5 +99,5 @@ void Organism::Die()
 
 std::string Organism::toString()
 {
-	return this->type + ";" + std::to_string(this->age) + ";" + std::to_string(this->alive) + ";" + std::to_string(this->strength) + ";" + std::to_string(this->initiative) + ";" + std::to_string(this->position.x) + ";" + std::to_string(this->position.y);
+	return std::string(1, this->type) + ";" + std::to_string(this->age) + ";" + std::to_string(this->strength) + ";" + std::to_string(this->initiative) + ";" + std::to_string(this->position.x) + ";" + std::to_string(this->position.y);
 }

@@ -117,16 +117,80 @@ int main()
 			save.open("..\\save.dat");
 			save << turns << std::endl << world.toString();
 			save.close();
-			Output::log << "Saved world state";
+			Output::log << "Saved world state" << std::endl;
 		}
 		else if (c == KEY_LOAD)
 		{
-			// TODO load state
-			//std::ifstream save("..\\save.dat");
-
-			//save.close();
-			//Output::GoToXY(20, CONSOLE_HEIGHT);
-			//std::cout << "Loaded world state";
+			std::ifstream save("..\\save.dat");
+			std::string line;
+			getline(save, line);
+			turns = std::stoi(line);
+			getline(save, line);
+			size_t worldx, worldy;
+			worldx = std::stoi(line);
+			getline(save, line);
+			worldy = std::stoi(line);
+			world = World(worldx, worldy); // also calls ~World();
+			while (true)
+			{
+				getline(save, line, ';');
+				if (line == "") break; // no next organism
+				char type = line[0]; // first thing in line is organism type
+				getline(save, line, ';');
+				int age = std::stoi(line);
+				getline(save, line, ';');
+				int strength = std::stoi(line);
+				getline(save, line, ';');
+				int initiative = std::stoi(line);
+				getline(save, line, ';');
+				int posx = std::stoi(line);
+				getline(save, line, ';');
+				int posy = std::stoi(line);
+				std::string name = "";
+				int countdown = 0;
+				getline(save, line, ';');
+				name = line;
+				getline(save, line); // read until endline
+				if(line != "") countdown = std::stoi(line);
+				switch (type)
+				{
+				case 'W':
+					world.AddOrganism(std::make_shared<Wolf>(Wolf(world, posx, posy, age, strength, initiative, name)));
+					break;
+				case 'S':
+					world.AddOrganism(std::make_shared<Sheep>(Sheep(world, posx, posy, age, strength, initiative, name)));
+					break;
+				case 'F':
+					world.AddOrganism(std::make_shared<Fox>(Fox(world, posx, posy, age, strength, initiative, name)));
+					break;
+				case 'T':
+					world.AddOrganism(std::make_shared<Turtle>(Turtle(world, posx, posy, age, strength, initiative, name)));
+					break;
+				case 'A':
+					world.AddOrganism(std::make_shared<Antelope>(Antelope(world, posx, posy, age, strength, initiative, name)));
+					break;
+				case 'H':
+					world.AddOrganism(std::make_shared<Human>(Human(world, posx, posy, age, strength, initiative, name, countdown)));
+					break;
+				case 'G':
+					world.AddOrganism(std::make_shared<Grass>(Grass(world, posx, posy, age, strength, initiative)));
+					break;
+				case 'D':
+					world.AddOrganism(std::make_shared<Dairy>(Dairy(world, posx, posy, age, strength, initiative)));
+					break;
+				case 'U':
+					world.AddOrganism(std::make_shared<Guarana>(Guarana(world, posx, posy, age, strength, initiative)));
+					break;
+				case 'B':
+					world.AddOrganism(std::make_shared<WolfBerries>(WolfBerries(world, posx, posy, age, strength, initiative)));
+					break;
+				case 'C':
+					world.AddOrganism(std::make_shared<SosnowskisBorsch>(SosnowskisBorsch(world, posx, posy, age, strength, initiative)));
+					break;
+				}
+			}
+			save.close();
+			Output::log << "Loaded world state" << std::endl;
 		}
 		else if (c == KEY_QUIT)
 		{
